@@ -21,7 +21,8 @@ class IceMercuryClientExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-        $container->setParameter('mercury_client.service_description.path', __DIR__ . '/../Resources/config/client.json');
+        $container->setParameter('ice_mercury_client.service_description.path', __DIR__ . '/../Resources/config/client.json');
+        //$container->setParameter('ice_mercury_client.base_url', __DIR__ . '/../Resources/config/client.json');
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
