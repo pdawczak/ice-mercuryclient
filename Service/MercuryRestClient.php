@@ -5,24 +5,14 @@ use Guzzle\Service\Client;
 
 class MercuryRestClient extends Client
 {
-    /** @var \Guzzle\Service\Client */
-    private $guzzleClient;
 
     /**
      * @param \Guzzle\Service\Client $guzzleClient
      */
-    public function setGuzzleClient(Client $guzzleClient){
-        $this->guzzleClient = $guzzleClient;
-        $this->guzzleClient->setDefaultHeaders(array(
-            'Accepts' => 'application/json',
+    public function __construct($baseUrl = '', $config = null){
+        parent::__construct($baseUrl, $config);
+        $this->setDefaultHeaders(array(
+            'Accept'=> 'application/json'
         ));
-    }
-
-    /**
-     * @return \Guzzle\Service\Client
-     */
-    public function getGuzzleClient()
-    {
-        return $this->guzzleClient;
     }
 }
