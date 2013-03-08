@@ -28,4 +28,9 @@ class MercuryClient
     {
         return $this->restClient;
     }
+
+
+    public function findOrderById($id){
+        return $this->getRestClient()->getCommand('GetOrder', array('id'=>$id))->execute();
+    }
 }

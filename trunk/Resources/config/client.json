@@ -1,0 +1,16 @@
+{
+    "name": "ICE Mercury",
+    "operations": {
+        "GetOrder": {
+            "httpMethod": "GET",
+            "uri" : "/api/order/{id}",
+            "responseClass": "Ice\\MercuryClientBundle\\Entity\\Order",
+            "parameters": {
+                "id":{
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        }
+    }
+}
