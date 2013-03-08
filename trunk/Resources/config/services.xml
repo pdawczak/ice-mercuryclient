@@ -3,4 +3,45 @@
 <container xmlns="http://symfony.com/schema/dic/services"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service
+                id="mercury_rest_client.service_description"
+                class="%guzzle.service_description.class%"
+                factory-class="%guzzle.service_description.class%"
+                factory-method="factory"
+                public="false"
+                >
+            <argument>%ice_mercury_client.service_description_path%</argument>
+        </service>
+
+        <service
+                id="mercury_rest_client.guzzle"
+                class="%guzzle.client.class%"
+                public="false">
+            <tag name="guzzle.client"/>
+            <argument>%ice_mercury_client.base_url%</argument>
+            <call method="setDescription">
+                <argument type="service" id="mercury_rest_client.service_description"/>
+            </call>
+        </service>
+
+        <service
+                id="mercury_rest_client"
+                class="Ice\MercuryClientBundle\Service\MercuryRestClient"
+                public="false">
+            <call method="setGuzzleClient">
+                <argument type="service" id="mercury_rest_client.guzzle"/>
+            </call>
+        </service>
+
+        <service
+                id="mercury_client"
+                class="Ice\MercuryClientBundle\Service\MercuryClient"
+                public="true">
+            <tag name="guzzle.client"/>
+            <call method="setRestClient">
+                <argument type="service" id="mercury_rest_client"/>
+            </call>
+        </service>
+    </services>
 </container>
