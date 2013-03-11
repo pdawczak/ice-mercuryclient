@@ -5,6 +5,9 @@ namespace Ice\MercuryClientBundle\Entity;
 use JMS\Serializer\Annotation as JMS;
 use Doctrine\Common\Collections\ArrayCollection;
 
+/**
+ * @JMS\AccessType("public_method")
+ */
 class Order{
     /**
      * @var int
@@ -67,5 +70,48 @@ class Order{
     public function getSuborders()
     {
         return $this->suborders;
+    }
+
+    /**
+     * @param \DateTime $created
+     * @return Order
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+        return $this;
+    }
+
+    /**
+     * @param string $iceId
+     * @return Order
+     */
+    public function setIceId($iceId)
+    {
+        $this->iceId = $iceId;
+        return $this;
+    }
+
+    /**
+     * @param int $id
+     * @return Order
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @param ArrayCollection|Suborder[] $suborders
+     * @return Order
+     */
+    public function setSuborders($suborders)
+    {
+        foreach($suborders as $suborder){
+            $suborder->setOrder($this);
+        }
+        $this->suborders = $suborders;
+        return $this;
     }
 }

@@ -36,6 +36,12 @@ class Suborder{
     private $group;
 
     /**
+     * @var Order
+     * @JMS\Type("Ice\MercuryClientBundle\Entity\Order")
+     */
+    private $order;
+
+    /**
      * Initialise ArrayCollections
      */
     public function __construct(){
@@ -80,5 +86,73 @@ class Suborder{
     public function getPaymentPlanDescription()
     {
         return $this->paymentPlanDescription;
+    }
+
+    /**
+     * @return \Ice\MercuryClientBundle\Entity\Order
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * @param string $description
+     * @return Suborder
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @param \Ice\MercuryClientBundle\Entity\SuborderGroup $group
+     * @return Suborder
+     */
+    public function setGroup($group)
+    {
+        $this->group = $group;
+        return $this;
+    }
+
+    /**
+     * @param int $id
+     * @return Suborder
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection|LineItem[] $lineItems
+     * @return Suborder
+     */
+    public function setLineItems($lineItems)
+    {
+        $this->lineItems = $lineItems;
+        return $this;
+    }
+
+    /**
+     * @param \Ice\MercuryClientBundle\Entity\Order $order
+     * @return Suborder
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+        return $this;
+    }
+
+    /**
+     * @param string $paymentPlanDescription
+     * @return Suborder
+     */
+    public function setPaymentPlanDescription($paymentPlanDescription)
+    {
+        $this->paymentPlanDescription = $paymentPlanDescription;
+        return $this;
     }
 }
