@@ -60,4 +60,44 @@ class LineItem{
     {
         return $this->id;
     }
+
+    /**
+     * @param float $amount
+     * @return LineItem
+     */
+    public function setAmount($amount)
+    {
+        $this->amount = $amount;
+        return $this;
+    }
+
+    /**
+     * @param string $costCentre
+     * @return LineItem
+     */
+    public function setCostCentre($costCentre)
+    {
+        $this->costCentre = $costCentre;
+        return $this;
+    }
+
+    /**
+     * @param string $description
+     * @return LineItem
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @param int $id
+     * @return LineItem
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
 }

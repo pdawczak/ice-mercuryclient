@@ -11,6 +11,24 @@
                     "required": true
                 }
             }
+        },
+        "GetOrders": {
+            "httpMethod": "GET",
+            "uri" : "/api/orders",
+            "responseClass": "ArrayCollection<Ice\\MercuryClientBundle\\Entity\\Order>",
+            "parameters": {
+            }
+        },
+        "GetSuborderGroup": {
+            "httpMethod": "GET",
+            "uri" : "/api/subordergroup/{id}",
+            "responseClass": "Ice\\MercuryClientBundle\\Entity\\SuborderGroup",
+            "parameters": {
+                "id":{
+                    "location": "uri",
+                    "required": true
+                }
+            }
         }
     }
 }

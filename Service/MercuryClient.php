@@ -3,6 +3,7 @@
 namespace Ice\MercuryClientBundle\Service;
 
 use Guzzle\Service\Client;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class MercuryClient
 {
@@ -35,5 +36,22 @@ class MercuryClient
      */
     public function findOrderById($id){
         return $this->getRestClient()->getCommand('GetOrder', array('id'=>$id))->execute();
+    }
+
+    /**
+     * @param int $id
+     * @return \Ice\MercuryClientBundle\Entity\Order[]|ArrayCollection
+     */
+    public function findAllOrders(){
+        return $this->getRestClient()->getCommand('GetOrders')->execute();
+    }
+
+
+    /**
+     * @param int $id
+     * @return \Ice\MercuryClientBundle\Entity\SuborderGroup
+     */
+    public function findSuborderGroupById($id){
+        return $this->getRestClient()->getCommand('GetSuborderGroup', array('id'=>$id))->execute();
     }
 }
