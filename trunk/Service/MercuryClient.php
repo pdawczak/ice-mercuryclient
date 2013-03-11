@@ -29,7 +29,10 @@ class MercuryClient
         return $this->restClient;
     }
 
-
+    /**
+     * @param int $id
+     * @return \Ice\MercuryClientBundle\Entity\Order
+     */
     public function findOrderById($id){
         return $this->getRestClient()->getCommand('GetOrder', array('id'=>$id))->execute();
     }
