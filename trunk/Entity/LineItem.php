@@ -25,7 +25,7 @@ class LineItem{
 
     /**
      * @var int
-     * @JMS\Type("int")
+     * @JMS\Type("integer")
      */
     private $amount;
 
