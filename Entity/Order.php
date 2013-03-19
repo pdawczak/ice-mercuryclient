@@ -34,6 +34,12 @@ class Order{
     private $suborders;
 
     /**
+     * @var \Ice\JanusClientBundle\Response\User
+     * @JMS\Exclude
+     */
+    private $customer;
+
+    /**
      * Initialise ArrayCollections
      */
     public function __construct(){
@@ -113,5 +119,23 @@ class Order{
         }
         $this->suborders = $suborders;
         return $this;
+    }
+
+    /**
+     * @param \Ice\JanusClientBundle\Response\User $customer
+     * @return Order
+     */
+    public function setCustomer($customer)
+    {
+        $this->customer = $customer;
+        return $this;
+    }
+
+    /**
+     * @return \Ice\JanusClientBundle\Response\User
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
     }
 }
