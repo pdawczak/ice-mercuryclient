@@ -24,13 +24,13 @@ class LineItem{
     private $costCentre;
 
     /**
-     * @var float
-     * @JMS\Type("float")
+     * @var int
+     * @JMS\Type("int")
      */
     private $amount;
 
     /**
-     * @return float
+     * @return int
      */
     public function getAmount()
     {
@@ -62,7 +62,7 @@ class LineItem{
     }
 
     /**
-     * @param float $amount
+     * @param int $amount
      * @return LineItem
      */
     public function setAmount($amount)
