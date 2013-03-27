@@ -3,7 +3,7 @@
     "operations": {
         "GetOrder": {
             "httpMethod": "GET",
-            "uri" : "/api/order/{id}",
+            "uri" : "order/{id}",
             "responseClass": "Ice\\MercuryClientBundle\\Entity\\Order",
             "parameters": {
                 "id":{
@@ -14,14 +14,14 @@
         },
         "GetOrders": {
             "httpMethod": "GET",
-            "uri" : "/api/orders",
+            "uri" : "orders",
             "responseClass": "ArrayCollection<Ice\\MercuryClientBundle\\Entity\\Order>",
             "parameters": {
             }
         },
         "GetSuborderGroup": {
             "httpMethod": "GET",
-            "uri" : "/api/subordergroup/{id}",
+            "uri" : "subordergroup/{id}",
             "responseClass": "Ice\\MercuryClientBundle\\Entity\\SuborderGroup",
             "parameters": {
                 "id":{
