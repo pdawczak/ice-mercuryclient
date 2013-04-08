@@ -9,7 +9,7 @@ class PaymentPlanServiceTest extends \PHPUnit_Framework_TestCase
     public function testGetReceivableReturnsAnArrayOfReceivables()
     {
         $service = new PaymentPlanService();
-        $receivables = $service->getReceivables('residentialRegistrationFee', new \DateTime(), 1000);
+        $receivables = $service->getReceivables('ResidentialRegistrationFee', new \DateTime(), 1000);
         $this->assertCount(2, $receivables);
     }
 }

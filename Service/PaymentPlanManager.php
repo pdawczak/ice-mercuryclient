@@ -19,16 +19,16 @@ class PaymentPlanManager
      */
     public function getPaymentPlan($paymentPlanCode, $version = '1')
     {
+        $paymentPlanName = sprintf("%sV%s", $paymentPlanCode, $version);
+
         $mapper = array(
-            'residentialRegistrationFee' => array(
-                '1' => new ResidentialRegistrationFee(),
-            ),
+            'ResidentialRegistrationFeeV1' => new ResidentialRegistrationFee(),
         );
 
-        if (!array_key_exists($paymentPlanCode, $mapper) || !array_key_exists($version, $mapper[$paymentPlanCode])) {
-            throw new InvalidPaymentPlanException;
+        if (!array_key_exists($paymentPlanName, $mapper)) {
+            throw new InvalidPaymentPlanException(sprintf('Payment plan "%s", version "%s" does not exist', $paymentPlanCode, $version));
         }
 
-        return $mapper[$paymentPlanCode][$version];
+        return $mapper[$paymentPlanName];
     }
 }

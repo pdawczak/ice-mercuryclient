@@ -9,7 +9,7 @@ class PaymentPlanManagerTest extends \PHPUnit_Framework_TestCase
     public function testValidPaymentPlanCodeReturnsPaymentPlan()
     {
         $manager = new PaymentPlanManager();
-        $plan = $manager->getPaymentPlan('residentialRegistrationFee');
+        $plan = $manager->getPaymentPlan('ResidentialRegistrationFee');
         $this->assertInstanceOf('Ice\MercuryClientBundle\PaymentPlan\ResidentialRegistrationFee', $plan);
     }
 
