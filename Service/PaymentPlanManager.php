@@ -3,7 +3,7 @@
 namespace Ice\MercuryClientBundle\Service;
 
 use Ice\MercuryClientBundle\Exception\InvalidPaymentPlanException;
-use Ice\MercuryClientBundle\PaymentPlan\AbstractPaymentPlan;
+use Ice\MercuryClientBundle\PaymentPlan\PaymentPlanInterface;
 use Ice\MercuryClientBundle\PaymentPlan\ResidentialRegistrationFee;
 
 class PaymentPlanManager
@@ -15,7 +15,7 @@ class PaymentPlanManager
      * @param string $version Optional payment plan version
      *
      * @throws \Ice\MercuryClientBundle\Exception\InvalidPaymentPlanException
-     * @return AbstractPaymentPlan
+     * @return PaymentPlanInterface
      */
     public function getPaymentPlan($paymentPlanCode, $version = '1')
     {
