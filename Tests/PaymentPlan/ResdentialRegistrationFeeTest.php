@@ -19,13 +19,13 @@ class PaymentPlanServiceTest extends \PHPUnit_Framework_TestCase
 
         $this->assertCount(2, $receivables);
 
-        $firstInstallment = $receivables[0];
-        $this->assertEquals(150, $firstInstallment->getAmount());
-        $this->assertEquals($now, $firstInstallment->getDueDate());
+        $firstInstalment = $receivables[0];
+        $this->assertEquals(150, $firstInstalment->getAmount());
+        $this->assertEquals($now, $firstInstalment->getDueDate());
 
-        $secondInstallment = $receivables[1];
-        $this->assertEquals(850, $secondInstallment->getAmount());
-        $this->assertEquals($twoWeeksBeforeCourseStart, $secondInstallment->getDueDate());
+        $secondInstalment = $receivables[1];
+        $this->assertEquals(850, $secondInstalment->getAmount());
+        $this->assertEquals($twoWeeksBeforeCourseStart, $secondInstalment->getDueDate());
 
     }
 }
