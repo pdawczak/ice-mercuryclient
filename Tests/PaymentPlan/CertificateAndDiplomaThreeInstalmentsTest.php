@@ -5,7 +5,7 @@ namespace Ice\MercuryClientBundle\Tests\PaymentPlan;
 use Ice\MercuryClientBundle\Entity\Receivable;
 use Ice\MercuryClientBundle\PaymentPlan\CertificateAndDiplomaThreeInstalments;
 
-class CertificateAndDiplomaThreeInstallmentsTest extends \PHPUnit_Framework_TestCase
+class CertificateAndDiplomaThreeInstalmentsTest extends \PHPUnit_Framework_TestCase
 {
     public function testCorrectReceivablesCreated()
     {
