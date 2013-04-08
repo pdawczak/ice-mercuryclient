@@ -11,6 +11,9 @@ class PaymentPlanManagerTest extends \PHPUnit_Framework_TestCase
         $manager = new PaymentPlanManager();
         $plan = $manager->getPaymentPlan('ResidentialRegistrationFee');
         $this->assertInstanceOf('Ice\MercuryClientBundle\PaymentPlan\ResidentialRegistrationFee', $plan);
+
+        $plan = $manager->getPaymentPlan('AdvancedDiplomaSixInstalments', '1315November');
+        $this->assertInstanceOf('Ice\MercuryClientBundle\PaymentPlan\AdvancedDiplomaSixInstalments1315November', $plan);
     }
 
     /**

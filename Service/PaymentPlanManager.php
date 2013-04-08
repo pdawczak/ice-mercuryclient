@@ -3,7 +3,7 @@
 namespace Ice\MercuryClientBundle\Service;
 
 use Ice\MercuryClientBundle\Exception\InvalidPaymentPlanException;
-use Ice\MercuryClientBundle\PaymentPlan\AdvancedDiplomaSixInstalments;
+use Ice\MercuryClientBundle\PaymentPlan\AdvancedDiplomaSixInstalments1315November;
 use Ice\MercuryClientBundle\PaymentPlan\CertificateAndDiplomaThreeInstalments;
 use Ice\MercuryClientBundle\PaymentPlan\FullAmountNow;
 use Ice\MercuryClientBundle\PaymentPlan\PaymentPlanInterface;
@@ -25,7 +25,7 @@ class PaymentPlanManager
         $paymentPlanName = sprintf("%sV%s", $paymentPlanCode, $version);
 
         $mapper = array(
-            'AdvancedDiplomaSixInstalmentsV1' => new AdvancedDiplomaSixInstalments(),
+            'AdvancedDiplomaSixInstalmentsV1315November' => new AdvancedDiplomaSixInstalments1315November(),
             'CertificateAndDiplomaThreeInstallmentsV1' => new CertificateAndDiplomaThreeInstalments(),
             'FullAmountNowV1' => new FullAmountNow(),
             'ResidentialRegistrationFeeV1' => new ResidentialRegistrationFee(),
