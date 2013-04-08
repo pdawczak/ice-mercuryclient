@@ -5,7 +5,7 @@ namespace Ice\MercuryClientBundle\Tests\PaymentPlan;
 use Ice\MercuryClientBundle\Entity\Receivable;
 use Ice\MercuryClientBundle\PaymentPlan\ResidentialRegistrationFee;
 
-class PaymentPlanServiceTest extends \PHPUnit_Framework_TestCase
+class ResidentialRegistrationFeeTest extends \PHPUnit_Framework_TestCase
 {
     public function testCorrectReceivablesCreated()
     {
