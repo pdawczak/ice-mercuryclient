@@ -31,4 +31,20 @@ class CertificateAndDiplomaThreeInstalmentsTest extends \PHPUnit_Framework_TestC
         $this->assertEquals(330, $thirdInstalment->getAmount());
         $this->assertEquals($instalmentThreeDate, $thirdInstalment->getDueDate());
     }
+
+    public function testCorrectReceivablesCreatedForBursary()
+    {
+        $plan = new CertificateAndDiplomaThreeInstalments();
+        /** @var $receivables Receivable[] */
+        $receivables = $plan->getReceivables(new \DateTime(), 130000);
+
+        $firstInstalment = $receivables[0];
+        $this->assertEquals(44200, $firstInstalment->getAmount());
+
+        $secondInstalment = $receivables[1];
+        $this->assertEquals(42900, $secondInstalment->getAmount());
+
+        $thirdInstalment = $receivables[2];
+        $this->assertEquals(42900, $thirdInstalment->getAmount());
+    }
 }
