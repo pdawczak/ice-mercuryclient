@@ -7,6 +7,10 @@
         {
             "name": "Rob Hogan",
             "email": "rob.hogan@admin.cam.ac.uk"
+        },
+        {
+            "name": "Stuart Chapman",
+            "email": "stuart.chapman@admin.cam.ac.uk"
         }
     ],
     "require": {
