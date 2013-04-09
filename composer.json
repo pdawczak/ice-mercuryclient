@@ -2,11 +2,15 @@
     "name": "ice/mercuryclient-bundle",
     "type": "symfony-bundle",
     "description": "Client for the ICE Mercury API",
-    "licence": "MIT",
+    "license": "MIT",
     "authors": [
         {
             "name": "Rob Hogan",
             "email": "rob.hogan@admin.cam.ac.uk"
+        },
+        {
+            "name": "Stuart Chapman",
+            "email": "stuart.chapman@admin.cam.ac.uk"
         }
     ],
     "require": {

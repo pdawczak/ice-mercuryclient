@@ -67,4 +67,26 @@ class Receivable{
     {
         return $this->id;
     }
+
+    /**
+     * @param int $amount
+     *
+     * @return Receivable
+     */
+    public function setAmount($amount)
+    {
+        $this->amount = $amount;
+        return $this;
+    }
+
+    /**
+     * @param \DateTime $dueDate
+     *
+     * @return Receivable
+     */
+    public function setDueDate($dueDate)
+    {
+        $this->dueDate = $dueDate;
+        return $this;
+    }
 }
