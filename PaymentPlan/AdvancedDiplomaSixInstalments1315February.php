@@ -18,7 +18,7 @@ class AdvancedDiplomaSixInstalments1315February extends AbstractPaymentPlan
 
         $instalment2 = new Receivable();
         $instalment2
-            ->setAmount($total * 0.16) // 16%
+            ->setAmount($total * 0.17) // 17%
             ->setDueDate(new \DateTime('2014-02-01')); // 1 February 2014
 
         $instalment3 = new Receivable();
@@ -28,12 +28,12 @@ class AdvancedDiplomaSixInstalments1315February extends AbstractPaymentPlan
 
         $instalment4 = new Receivable();
         $instalment4
-            ->setAmount($total * 0.16) // 16%
+            ->setAmount($total * 0.17) // 17%
             ->setDueDate(new \DateTime('2014-11-01')); // 1 November 2014
 
         $instalment5 = new Receivable();
         $instalment5
-            ->setAmount($total * 0.16) // 16%
+            ->setAmount($total * 0.17) // 17%
             ->setDueDate(new \DateTime('2015-02-01')); // 1 February 2015
 
         $instalment6 = new Receivable();

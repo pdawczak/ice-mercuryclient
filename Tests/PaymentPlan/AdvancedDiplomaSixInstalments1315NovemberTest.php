@@ -18,32 +18,32 @@ class AdvancedDiplomaSixInstalments1315NovemberTest extends \PHPUnit_Framework_T
 
         $plan = new AdvancedDiplomaSixInstalments1315November();
         /** @var $receivables Receivable[] */
-        $receivables = $plan->getReceivables(new \DateTime(), 1000);
+        $receivables = $plan->getReceivables(new \DateTime(), 220000);
 
         $this->assertCount(6, $receivables);
 
         $firstInstalment = $receivables[0];
-        $this->assertEquals(170, $firstInstalment->getAmount());
+        $this->assertEquals(37400, $firstInstalment->getAmount());
         $this->assertEquals($now, $firstInstalment->getDueDate());
 
         $secondInstalment = $receivables[1];
-        $this->assertEquals(160, $secondInstalment->getAmount());
+        $this->assertEquals(37400, $secondInstalment->getAmount());
         $this->assertEquals($instalmentTwoDate, $secondInstalment->getDueDate());
 
         $thirdInstalment = $receivables[2];
-        $this->assertEquals(160, $thirdInstalment->getAmount());
+        $this->assertEquals(35200, $thirdInstalment->getAmount());
         $this->assertEquals($instalmentThreeDate, $thirdInstalment->getDueDate());
 
         $fourthInstalment = $receivables[3];
-        $this->assertEquals(160, $fourthInstalment->getAmount());
+        $this->assertEquals(37400, $fourthInstalment->getAmount());
         $this->assertEquals($instalmentFourDate, $fourthInstalment->getDueDate());
 
         $fifthInstalment = $receivables[4];
-        $this->assertEquals(160, $fifthInstalment->getAmount());
+        $this->assertEquals(37400, $fifthInstalment->getAmount());
         $this->assertEquals($instalmentFiveDate, $fifthInstalment->getDueDate());
 
         $sixthInstalment = $receivables[5];
-        $this->assertEquals(160, $sixthInstalment->getAmount());
+        $this->assertEquals(35200, $sixthInstalment->getAmount());
         $this->assertEquals($instalmentSixDate, $sixthInstalment->getDueDate());
     }
 }
