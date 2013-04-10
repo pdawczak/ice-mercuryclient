@@ -28,16 +28,88 @@ class Order{
     private $created;
 
     /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $customerTitle;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $customerFirstNames;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $customerMiddleNames;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $customerLastNames;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $customerAddress1;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $customerAddress2;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $customerAddress3;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $customerAddress4;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $customerPostcode;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $customerCountry;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $customerTelephone;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $customerMobile;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $customerEmail;
+
+    /**
      * @var Suborder[]|ArrayCollection
      * @JMS\Type("ArrayCollection<Ice\MercuryClientBundle\Entity\Suborder>")
      */
     private $suborders;
-
-    /**
-     * @var \Ice\JanusClientBundle\Response\User
-     * @JMS\Exclude
-     */
-    private $customer;
 
     /**
      * Initialise ArrayCollections
@@ -122,20 +194,246 @@ class Order{
     }
 
     /**
-     * @param \Ice\JanusClientBundle\Response\User $customer
-     * @return Order
+     * @param Suborder $suborder
+     * @return $this
      */
-    public function setCustomer($customer)
-    {
-        $this->customer = $customer;
+    public function addSuborder(Suborder $suborder){
+        $suborder->setOrder($this);
+        $this->suborders->add($suborder);
         return $this;
     }
 
     /**
-     * @return \Ice\JanusClientBundle\Response\User
+     * @param string $customerAddress1
+     * @return Order
      */
-    public function getCustomer()
+    public function setCustomerAddress1($customerAddress1)
     {
-        return $this->customer;
+        $this->customerAddress1 = $customerAddress1;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerAddress1()
+    {
+        return $this->customerAddress1;
+    }
+
+    /**
+     * @param string $customerAddress2
+     * @return Order
+     */
+    public function setCustomerAddress2($customerAddress2)
+    {
+        $this->customerAddress2 = $customerAddress2;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerAddress2()
+    {
+        return $this->customerAddress2;
+    }
+
+    /**
+     * @param string $customerAddress3
+     * @return Order
+     */
+    public function setCustomerAddress3($customerAddress3)
+    {
+        $this->customerAddress3 = $customerAddress3;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerAddress3()
+    {
+        return $this->customerAddress3;
+    }
+
+    /**
+     * @param string $customerAddress4
+     * @return Order
+     */
+    public function setCustomerAddress4($customerAddress4)
+    {
+        $this->customerAddress4 = $customerAddress4;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerAddress4()
+    {
+        return $this->customerAddress4;
+    }
+
+    /**
+     * @param string $customerCountry
+     * @return Order
+     */
+    public function setCustomerCountry($customerCountry)
+    {
+        $this->customerCountry = $customerCountry;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerCountry()
+    {
+        return $this->customerCountry;
+    }
+
+    /**
+     * @param string $customerEmail
+     * @return Order
+     */
+    public function setCustomerEmail($customerEmail)
+    {
+        $this->customerEmail = $customerEmail;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerEmail()
+    {
+        return $this->customerEmail;
+    }
+
+    /**
+     * @param string $customerFirstNames
+     * @return Order
+     */
+    public function setCustomerFirstNames($customerFirstNames)
+    {
+        $this->customerFirstNames = $customerFirstNames;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerFirstNames()
+    {
+        return $this->customerFirstNames;
+    }
+
+    /**
+     * @param string $customerLastNames
+     * @return Order
+     */
+    public function setCustomerLastNames($customerLastNames)
+    {
+        $this->customerLastNames = $customerLastNames;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerLastNames()
+    {
+        return $this->customerLastNames;
+    }
+
+    /**
+     * @param string $customerMiddleNames
+     * @return Order
+     */
+    public function setCustomerMiddleNames($customerMiddleNames)
+    {
+        $this->customerMiddleNames = $customerMiddleNames;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerMiddleNames()
+    {
+        return $this->customerMiddleNames;
+    }
+
+    /**
+     * @param string $customerMobile
+     * @return Order
+     */
+    public function setCustomerMobile($customerMobile)
+    {
+        $this->customerMobile = $customerMobile;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerMobile()
+    {
+        return $this->customerMobile;
+    }
+
+    /**
+     * @param string $customerPostcode
+     * @return Order
+     */
+    public function setCustomerPostcode($customerPostcode)
+    {
+        $this->customerPostcode = $customerPostcode;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerPostcode()
+    {
+        return $this->customerPostcode;
+    }
+
+    /**
+     * @param string $customerTelephone
+     * @return Order
+     */
+    public function setCustomerTelephone($customerTelephone)
+    {
+        $this->customerTelephone = $customerTelephone;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerTelephone()
+    {
+        return $this->customerTelephone;
+    }
+
+    /**
+     * @param string $customerTitle
+     * @return Order
+     */
+    public function setCustomerTitle($customerTitle)
+    {
+        $this->customerTitle = $customerTitle;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerTitle()
+    {
+        return $this->customerTitle;
     }
 }
