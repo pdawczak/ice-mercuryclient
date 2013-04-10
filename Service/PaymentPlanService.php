@@ -5,18 +5,18 @@ namespace Ice\MercuryClientBundle\Service;
 class PaymentPlanService
 {
     /**
-     * @param string    $paymentPlanCode
-     * @param \DateTime $courseStartDate
-     * @param int       $total
+     * @param string    $paymentPlanCode Code of payment plan
+     * @param string    $version         Payment plan rules version
+     * @param \DateTime $courseStartDate Date course starts
+     * @param int       $total           Total amount owed by booker
      *
      * @return \Ice\MercuryClientBundle\Entity\Receivable[]
      */
-    public function getReceivables($paymentPlanCode, \DateTime $courseStartDate, $total)
+    public function getReceivables($paymentPlanCode, $version, \DateTime $courseStartDate, $total)
     {
         $manager = new PaymentPlanManager();
         return $manager
-            ->getPaymentPlan($paymentPlanCode)
-            ->getReceivables($courseStartDate, $total)
-        ;
+            ->getPaymentPlan($paymentPlanCode, $version)
+            ->getReceivables($courseStartDate, $total);
     }
 }
