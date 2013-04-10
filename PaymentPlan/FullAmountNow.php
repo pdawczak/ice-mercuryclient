@@ -4,7 +4,7 @@ namespace Ice\MercuryClientBundle\PaymentPlan;
 
 use Ice\MercuryClientBundle\Entity\Receivable;
 
-class FullAmountNow extends AbstractPaymentPlan
+class FullAmountNow implements PaymentPlanInterface
 {
     /**
      * {@inheritDoc}

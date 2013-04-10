@@ -4,7 +4,7 @@ namespace Ice\MercuryClientBundle\PaymentPlan;
 
 use Ice\MercuryClientBundle\Entity\Receivable;
 
-class ResidentialRegistrationFee extends AbstractPaymentPlan
+class ResidentialRegistrationFee implements PaymentPlanInterface
 {
     /**
      * {@inheritDoc}

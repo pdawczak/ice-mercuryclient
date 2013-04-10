@@ -4,7 +4,7 @@ namespace Ice\MercuryClientBundle\PaymentPlan;
 
 use Ice\MercuryClientBundle\Entity\Receivable;
 
-class AdvancedDiplomaSixInstalments1315November extends AbstractPaymentPlan
+class AdvancedDiplomaSixInstalments1315November implements PaymentPlanInterface
 {
     /**
      * {@inheritDoc}
