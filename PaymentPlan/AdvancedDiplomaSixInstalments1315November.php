@@ -50,4 +50,20 @@ class AdvancedDiplomaSixInstalments1315November implements PaymentPlanInterface
             $instalment6,
         );
     }
+
+    /**
+     * @return string
+     */
+    public function getShortDescription()
+    {
+        return 'Six quarterly installments';
+    }
+
+    /**
+     * @return string
+     */
+    public function getLongDescription()
+    {
+        return 'Six quarterly installments';
+    }
 }

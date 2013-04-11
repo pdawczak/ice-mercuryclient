@@ -19,4 +19,16 @@ class PaymentPlanService
             ->getPaymentPlan($paymentPlanCode, $version)
             ->getReceivables($courseStartDate, $total);
     }
+
+    /**
+     * @param string    $paymentPlanCode Code of payment plan
+     * @param string    $version         Payment plan rules version
+     *
+     * @return \Ice\MercuryClientBundle\PaymentPlan\PaymentPlanInterface
+     */
+    public function getPaymentPlan($paymentPlanCode, $version)
+    {
+        $manager = new PaymentPlanManager();
+        return $manager->getPaymentPlan($paymentPlanCode, $version);
+    }
 }

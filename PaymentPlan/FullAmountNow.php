@@ -20,4 +20,18 @@ class FullAmountNow implements PaymentPlanInterface
             $instalment,
         );
     }
+
+    /**
+     * @return string
+     */
+    public function getShortDescription(){
+        return 'Pay the full amount now';
+    }
+
+    /**
+     * @return string
+     */
+    public function getLongDescription(){
+        return 'Pay the full amount now';
+    }
 }

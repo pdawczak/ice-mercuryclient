@@ -32,4 +32,20 @@ class CertificateAndDiplomaThreeInstalments implements PaymentPlanInterface
             $instalment3,
         );
     }
+
+    /**
+     * @return string
+     */
+    public function getShortDescription()
+    {
+        return 'Three instalments';
+    }
+
+    /**
+     * @return string
+     */
+    public function getLongDescription()
+    {
+        return 'Three equal instalments now, in February and in April';
+    }
 }

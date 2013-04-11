@@ -26,4 +26,20 @@ class ResidentialRegistrationFee implements PaymentPlanInterface
             $instalment2
         );
     }
+
+    /**
+     * @return string
+     */
+    public function getShortDescription()
+    {
+        return '15% now, remainder later';
+    }
+
+    /**
+     * @return string
+     */
+    public function getLongDescription()
+    {
+        return '15% now, remainder later';
+    }
 }

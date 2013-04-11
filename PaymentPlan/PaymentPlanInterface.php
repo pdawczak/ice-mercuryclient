@@ -12,4 +12,8 @@ interface PaymentPlanInterface {
      * @return Receivable[]
      */
     public function getReceivables(\DateTime $courseStartDate, $total);
+
+    public function getShortDescription();
+
+    public function getLongDescription();
 }
