@@ -36,5 +36,12 @@
                 <argument type="service" id="mercury_rest_client"/>
             </call>
         </service>
+
+        <service
+                id="mercury.payment_plans"
+                class="Ice\MercuryClientBundle\Service\PaymentPlanService"
+                public="true"
+                >
+        </service>
     </services>
 </container>
