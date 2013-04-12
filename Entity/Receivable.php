@@ -6,6 +6,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 class Receivable{
     /**
+     * Constants to be used with setMethod
+     */
+    const METHOD_RECURRING = 'RECUR';
+    const METHOD_ONLINE = 'ONLINE';
+    const METHOD_MANUAL = 'MANUAL';
+
+    /**
      * @var int
      * @JMS\Type("integer")
      */
@@ -22,6 +29,12 @@ class Receivable{
      * @JMS\Type("DateTime")
      */
     private $dueDate;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $method;
 
     /**
      * @var TransactionAllocation[]|ArrayCollection
@@ -88,5 +101,23 @@ class Receivable{
     {
         $this->dueDate = $dueDate;
         return $this;
+    }
+
+    /**
+     * @param string $method
+     * @return Receivable
+     */
+    public function setMethod($method)
+    {
+        $this->method = $method;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMethod()
+    {
+        return $this->method;
     }
 }

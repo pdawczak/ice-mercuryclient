@@ -14,12 +14,16 @@ class ResidentialRegistrationFee implements PaymentPlanInterface
         $instalment1 = new Receivable();
         $instalment1
             ->setAmount($total * 0.15) // 15%
-            ->setDueDate(new \DateTime()); // due immediately
+            ->setDueDate(new \DateTime()) // due immediately
+            ->setMethod(Receivable::METHOD_ONLINE)
+        ;
 
         $instalment2 = new Receivable();
         $instalment2
             ->setAmount($total * 0.85) // 85%
-            ->setDueDate($courseStartDate->sub(new \DateInterval("P14D"))); // 2 weeks before course starts
+            ->setDueDate($courseStartDate->sub(new \DateInterval("P14D"))) // 2 weeks before course starts
+            ->setMethod(Receivable::METHOD_RECURRING)
+        ;
 
         return array(
             $instalment1,
