@@ -39,7 +39,6 @@ class MercuryClient
     }
 
     /**
-     * @param int $id
      * @return \Ice\MercuryClientBundle\Entity\Order[]|ArrayCollection
      */
     public function findAllOrders(){
