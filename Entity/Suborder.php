@@ -137,6 +137,16 @@ class Suborder{
     }
 
     /**
+     * @param LineItem $lineItem
+     * @return $this
+     */
+    public function addLineItem(LineItem $lineItem)
+    {
+        $this->lineItems->add($lineItem);
+        return $this;
+    }
+
+    /**
      * @param \Ice\MercuryClientBundle\Entity\Order $order
      * @return Suborder
      */
