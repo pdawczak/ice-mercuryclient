@@ -12,7 +12,8 @@ class MercuryRestClient extends Client
     public function __construct($baseUrl = '', $config = null){
         parent::__construct($baseUrl, $config);
         $this->setDefaultHeaders(array(
-            'Accept'=> 'application/json'
+            'Accept'=> 'application/json',
+            'Content-Type'=>'application/json'
         ));
     }
 }

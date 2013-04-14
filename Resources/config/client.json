@@ -29,6 +29,19 @@
                     "required": true
                 }
             }
+        },
+        "CreateOrder": {
+            "httpMethod": "POST",
+            "uri": "orders",
+            "responseClass": "Ice\\MercuryClientBundle\\Entity\\Order",
+            "parameters": {
+                "order" : {
+                    "location":"body",
+                    "sentAs":"json",
+                    "required":true,
+                    "instanceOf": "Ice\\MercuryClientBundle\\Entity\\Order"
+                }
+            }
         }
     }
 }
