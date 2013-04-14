@@ -76,10 +76,14 @@ class MercuryClient
         }
     }
 
+    public function createTransactionRequest(){
+
+    }
+
 
     /**
      * @param int $id
-     * @return \Ice\MercuryClientBundle\Entity\SuborderGroup
+     * @return \Ice\MercuryClientBundle\Entity\PaymentGroup
      */
     public function findSuborderGroupById($id)
     {

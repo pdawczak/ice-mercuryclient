@@ -22,7 +22,7 @@
         "GetSuborderGroup": {
             "httpMethod": "GET",
             "uri" : "subordergroup/{id}",
-            "responseClass": "Ice\\MercuryClientBundle\\Entity\\SuborderGroup",
+            "responseClass": "Ice\\MercuryClientBundle\\Entity\\PaymentGroup",
             "parameters": {
                 "id":{
                     "location": "uri",

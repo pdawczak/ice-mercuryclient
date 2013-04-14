@@ -4,7 +4,7 @@ namespace Ice\MercuryClientBundle\Entity;
 use JMS\Serializer\Annotation as JMS;
 use Doctrine\Common\Collections\ArrayCollection;
 
-class SuborderGroup{
+class PaymentGroup{
     /**
      * @var int
      * @JMS\Type("integer")
@@ -57,7 +57,7 @@ class SuborderGroup{
 
     /**
      * @param int $id
-     * @return SuborderGroup
+     * @return PaymentGroup
      */
     public function setId($id)
     {
@@ -67,7 +67,7 @@ class SuborderGroup{
 
     /**
      * @param $receivables
-     * @return SuborderGroup
+     * @return PaymentGroup
      */
     public function setReceivables($receivables)
     {
@@ -77,12 +77,12 @@ class SuborderGroup{
 
     /**
      * @param ArrayCollection|Suborder[] $suborders
-     * @return SuborderGroup
+     * @return PaymentGroup
      */
     public function setSuborders($suborders)
     {
         foreach($suborders as $suborder){
-            $suborder->setGroup($this);
+            $suborder->setPaymentGroup($this);
         }
         $this->suborders = $suborders;
         return $this;

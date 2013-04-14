@@ -30,10 +30,10 @@ class Suborder{
     private $lineItems;
 
     /**
-     * @var SuborderGroup
-     * @JMS\Type("Ice\MercuryClientBundle\Entity\SuborderGroup")
+     * @var PaymentGroup
+     * @JMS\Type("Ice\MercuryClientBundle\Entity\PaymentGroup")
      */
-    private $group;
+    private $paymentGroup;
 
     /**
      * @var Order
@@ -57,11 +57,11 @@ class Suborder{
     }
 
     /**
-     * @return \Doctrine\Common\Collections\ArrayCollection|SuborderGroup[]
+     * @return \Doctrine\Common\Collections\ArrayCollection|PaymentGroup[]
      */
-    public function getGroup()
+    public function getPaymentGroup()
     {
-        return $this->group;
+        return $this->paymentGroup;
     }
 
     /**
@@ -107,12 +107,12 @@ class Suborder{
     }
 
     /**
-     * @param \Ice\MercuryClientBundle\Entity\SuborderGroup $group
+     * @param \Ice\MercuryClientBundle\Entity\PaymentGroup $group
      * @return Suborder
      */
-    public function setGroup($group)
+    public function setPaymentGroup($group)
     {
-        $this->group = $group;
+        $this->paymentGroup = $group;
         return $this;
     }
 
