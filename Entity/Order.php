@@ -448,4 +448,18 @@ class Order{
         }
         return $total;
     }
+
+    public function getCustomerFullName()
+    {
+        $names = array(
+            $this->getCustomerTitle(),
+            $this->getCustomerFirstNames(),
+            $this->getCustomerMiddleNames(),
+            $this->getCustomerLastNames(),
+        );
+
+        $names = array_filter($names);
+
+        return implode(" ", $names);
+    }
 }
