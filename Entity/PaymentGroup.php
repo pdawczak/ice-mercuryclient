@@ -13,13 +13,13 @@ class PaymentGroup{
 
     /**
      * @var Receivable[]|ArrayCollection
-     * @JMS\Type("ArrayCollection<Ice\MercuryClientBundle\Entity\Receivable>")
+     * @JMS\Type("array<Ice\MercuryClientBundle\Entity\Receivable>")
      */
     private $receivables;
 
     /**
      * @var Suborder[]|ArrayCollection
-     * @JMS\Type("ArrayCollection<Ice\MercuryClientBundle\Entity\Suborder>")
+     * @JMS\Type("array<Ice\MercuryClientBundle\Entity\Suborder>")
      */
     private $suborders;
 

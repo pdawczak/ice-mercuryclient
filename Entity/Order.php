@@ -436,4 +436,16 @@ class Order{
     {
         return $this->customerTitle;
     }
+
+    /**
+     * @return int
+     */
+    public function getTotalAmount()
+    {
+        $total = 0;
+        foreach($this->getSuborders() as $suborder) {
+            $total += $suborder->getTotalAmount();
+        }
+        return $total;
+    }
 }

@@ -16,22 +16,21 @@ class TransactionRequestComponent
     /**
      * @var TransactionRequest
      *
-     * @ORM\ManyToOne(targetEntity="TransactionRequest", inversedBy="components",cascade={"persist"})
-     * @ORM\JoinColumn(referencedColumnName="id")
+     * @JMS\Type("Ice\MercuryClientBundle\Entity\TransactionRequest")
      */
     private $request;
 
     /**
      * @var PaymentGroup
      *
-     * @ORM\ManyToOne(targetEntity="PaymentGroup")
+     * @JMS\Type("Ice\MercuryClientBundle\Entity\PaymentGroup")
      **/
     private $paymentGroup;
 
     /**
      * @var int
      *
-     * @ORM\Column(type="integer")
+     * @JMS\Type("integer")
      */
     private $requestAmount;
 
@@ -50,7 +49,7 @@ class TransactionRequestComponent
     }
 
     /**
-     * @param \Ice\MercuryBundle\Entity\PaymentGroup $request
+     * @param \Ice\MercuryClientBundle\Entity\TransactionRequest $request
      * @return TransactionRequestComponent
      */
     public function setRequest($request)
@@ -60,7 +59,7 @@ class TransactionRequestComponent
     }
 
     /**
-     * @return \Ice\MercuryBundle\Entity\TransactionRequest
+     * @return \Ice\MercuryClientBundle\Entity\TransactionRequest $request
      */
     public function getRequest()
     {

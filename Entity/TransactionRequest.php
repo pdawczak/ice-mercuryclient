@@ -82,9 +82,10 @@ class TransactionRequest{
      */
     public function setComponents($components)
     {
+        $this->components = array();
         foreach($components as $component){
             $component->setRequest($this);
-            $this->components->add($component);
+            $this->components[] = $component;
         }
         return $this;
     }
@@ -180,5 +181,24 @@ class TransactionRequest{
             $total += $component->getRequestAmount();
         }
         return $total;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIframeUrl(){
+        $root = "https://payments.securetrading.net/process/payments/choice";
+        $params = array(
+            'childcss'=>'stpp-public',
+            'childjs'=>'stpp-resize',
+            'sitereference'=>'test_uniofcam45561',
+            'mainamount'=>$this->getTotalRequestAmount() / 100,
+            'currencyiso3a'=>'GBP',
+            'version'=>1,
+            'accounttypedescription'=>'MOTO',
+            'orderreference'=>$this->getReference()
+        );
+        $queryString = http_build_query($params);
+        return $root.'?'.$queryString;
     }
 }

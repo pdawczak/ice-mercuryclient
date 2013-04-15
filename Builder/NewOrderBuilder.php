@@ -8,6 +8,7 @@ use Ice\MercuryClientBundle\PaymentPlan\AbstractPaymentPlan;
 use Ice\MercuryClientBundle\PaymentPlan\PaymentPlanInterface;
 use Ice\MinervaClientBundle\Entity\Booking;
 use Ice\MercuryClientBundle\Entity\Suborder;
+use Ice\MercuryClientBundle\Entity\PaymentGroup;
 use Ice\VeritasClientBundle\Service\VeritasClient;
 use Ice\VeritasClientBundle\Entity\Course;
 
@@ -74,12 +75,23 @@ class NewOrderBuilder
     {
         $booking->getPaymentGroupId();
         $suborder = new Suborder();
+        $paymentGroup = new PaymentGroup();
+
         if(!$course && !$this->getVeritasClient()){
             throw new \LogicException("Course must be given or veritas client must be set before a booking can be added");
         }
         if(!$course){
             $course = $this->getVeritasClient()->getCourse($booking->getAcademicInformation()->getCourseId());
         }
+
+        $paymentGroup->setReceivables($paymentPlan->getReceivables(
+            $course->getStartDate(),
+            $booking->getBookingTotalPriceInPence())
+        );
+
+        $suborder->setPaymentGroup($paymentGroup);
+        $suborder->setPaymentPlanDescription($paymentPlan->getShortDescription());
+
         foreach ($booking->getBookingItems() as $item) {
             $lineItem = new LineItem();
             $lineItem->setDescription($item->getDescription());

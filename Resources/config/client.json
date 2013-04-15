@@ -42,6 +42,19 @@
                     "instanceOf": "Ice\\MercuryClientBundle\\Entity\\Order"
                 }
             }
+        },
+        "CreateTransactionRequest": {
+            "httpMethod": "POST",
+            "uri": "transactionrequests",
+            "responseClass": "Ice\\MercuryClientBundle\\Entity\\TransactionRequest",
+            "parameters": {
+                "request" : {
+                    "location":"body",
+                    "sentAs":"json",
+                    "required":true,
+                    "instanceOf": "Ice\\MercuryClientBundle\\Entity\\TransactionRequest"
+                }
+            }
         }
     }
 }

@@ -57,7 +57,7 @@ class Suborder{
     }
 
     /**
-     * @return \Doctrine\Common\Collections\ArrayCollection|PaymentGroup[]
+     * @return PaymentGroup
      */
     public function getPaymentGroup()
     {
@@ -164,5 +164,17 @@ class Suborder{
     {
         $this->paymentPlanDescription = $paymentPlanDescription;
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalAmount()
+    {
+        $total = 0;
+        foreach($this->getLineItems() as $lineItem) {
+            $total += $lineItem->getAmount();
+        }
+        return $total;
     }
 }

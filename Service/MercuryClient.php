@@ -9,6 +9,8 @@ use Guzzle\Service\Command\DefaultRequestSerializer;
 use Ice\MercuryClientBundle\Builder\NewOrderBuilder;
 use Ice\MercuryClientBundle\Entity\Order;
 use Guzzle\Service\Command\OperationCommand;
+use Ice\MercuryClientBundle\Entity\TransactionRequest;
+use Ice\MercuryClientBundle\Entity\TransactionRequestComponent;
 
 class MercuryClient
 {
@@ -76,8 +78,30 @@ class MercuryClient
         }
     }
 
-    public function createTransactionRequest(){
+    public function requestOutstandingOnlineTransactionsByOrder(Order $order){
+        $request = new TransactionRequest();
+        $components = array();
+        foreach($order->getSuborders() as $suborder){
+            foreach($suborder->getPaymentGroup()->getReceivables() as $receivable){
+                if($receivable->getDueDate() < new \DateTime()){
+                    $component = new TransactionRequestComponent();
+                    $component->setRequestAmount($receivable->getAmount());
+                    $component->setPaymentGroup($suborder->getPaymentGroup());
+                    $components[] = $component;
+                }
+            }
+        }
+        $request->setComponents($components);
+        $request->setIceId($order->getIceId());
 
+        try {
+            /** @var $command OperationCommand */
+            $command = $this->getRestClient()->getCommand('CreateTransactionRequest', array('request' => $request));
+            return $command->execute();
+        } catch (BadResponseException $e) {
+            //TODO: Translate into a usable error
+            throw $e;
+        }
     }
 
 
