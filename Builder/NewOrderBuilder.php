@@ -60,7 +60,10 @@ class NewOrderBuilder
     public function setCustomerByUser(User $user)
     {
         $this->order->setIceId($user->getUsername());
+        $this->order->setCustomerTitle($user->getTitle());
         $this->order->setCustomerFirstNames($user->getFirstNames());
+        $this->order->setCustomerMiddleNames($user->getMiddleNames());
+        $this->order->setCustomerLastNames($user->getLastNames());
         return $this;
     }
 
@@ -89,6 +92,8 @@ class NewOrderBuilder
             $booking->getBookingTotalPriceInPence())
         );
 
+        $suborder->setDescription($course->getTitle());
+        $suborder->setExternalId('BOOKING:'.$booking->getId());
         $suborder->setPaymentGroup($paymentGroup);
         $suborder->setPaymentPlanDescription($paymentPlan->getShortDescription());
 
@@ -100,6 +105,19 @@ class NewOrderBuilder
             $suborder->addLineItem($lineItem);
         }
         $this->order->addSuborder($suborder);
+
+        foreach($booking->getRegistrationProgress()->getStepProgresses() as $stepProgress){
+            if($stepProgress->getStepName() === 'attendeeDetails'){
+                $this->order
+                    ->setCustomerAddress1($stepProgress->getFieldValueByName('address1')->getValue())
+                    ->setCustomerAddress2($stepProgress->getFieldValueByName('address2')->getValue())
+                    ->setCustomerAddress3($stepProgress->getFieldValueByName('address3')->getValue())
+                    ->setCustomerAddress4($stepProgress->getFieldValueByName('city')->getValue())
+                    ->setCustomerPostcode($stepProgress->getFieldValueByName('postCode')->getValue())
+                ;
+            }
+        }
+
         return $this;
     }
 
