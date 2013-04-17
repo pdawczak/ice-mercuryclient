@@ -42,6 +42,12 @@ class Suborder{
     private $order;
 
     /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $externalId;
+
+    /**
      * Initialise ArrayCollections
      */
     public function __construct(){
@@ -176,5 +182,23 @@ class Suborder{
             $total += $lineItem->getAmount();
         }
         return $total;
+    }
+
+    /**
+     * @param string $externalId
+     * @return Suborder
+     */
+    public function setExternalId($externalId)
+    {
+        $this->externalId = $externalId;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExternalId()
+    {
+        return $this->externalId;
     }
 }
