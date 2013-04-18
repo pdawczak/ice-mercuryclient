@@ -28,7 +28,7 @@ class PaymentPlanManager
         $mapper = array(
             'AdvancedDiplomaSixInstalmentsV1315November' => new AdvancedDiplomaSixInstalments1315November(),
             'AdvancedDiplomaSixInstalmentsV1315February' => new AdvancedDiplomaSixInstalments1315February(),
-            'CertificateAndDiplomaThreeInstallmentsV1314' => new CertificateAndDiplomaThreeInstalments(),
+            'CertificateAndDiplomaThreeInstalmentsV1314' => new CertificateAndDiplomaThreeInstalments(),
             'FullAmountNowV1' => new FullAmountNow(),
             'ResidentialRegistrationFeeV1' => new ResidentialRegistrationFee(),
         );
