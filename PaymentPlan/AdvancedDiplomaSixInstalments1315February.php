@@ -14,7 +14,7 @@ class AdvancedDiplomaSixInstalments1315February implements PaymentPlanInterface
         $instalment1 = new Receivable();
         $instalment1
             ->setAmount($total * 0.17) // 17%
-            ->setDueDate(new \DateTime()); // due immediately
+            ->setDueDate(null); // due immediately
 
         $instalment2 = new Receivable();
         $instalment2

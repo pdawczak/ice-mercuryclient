@@ -13,7 +13,7 @@ class FullAmountNow implements PaymentPlanInterface
     {
         $instalment = new Receivable();
         $instalment
-            ->setDueDate(new \DateTime())
+            ->setDueDate(null)
             ->setAmount($total)
             ->setMethod(Receivable::METHOD_ONLINE);
 

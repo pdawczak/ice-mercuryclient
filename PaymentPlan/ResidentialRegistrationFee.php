@@ -14,7 +14,7 @@ class ResidentialRegistrationFee implements PaymentPlanInterface
         $instalment1 = new Receivable();
         $instalment1
             ->setAmount($total * 0.15) // 15%
-            ->setDueDate(new \DateTime()) // due immediately
+            ->setDueDate(null) // due immediately
             ->setMethod(Receivable::METHOD_ONLINE)
         ;
 
