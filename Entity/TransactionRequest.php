@@ -186,7 +186,7 @@ class TransactionRequest{
     /**
      * @return string
      */
-    public function getIframeUrl(){
+    public function getIframeUrl(array $extraParams = array()){
         $root = "https://payments.securetrading.net/process/payments/choice";
         $params = array(
             'childcss'=>'stpp-public',
@@ -198,7 +198,7 @@ class TransactionRequest{
             'accounttypedescription'=>'MOTO',
             'orderreference'=>$this->getReference()
         );
-        $queryString = http_build_query($params);
+        $queryString = http_build_query(array_merge($extraParams, $params));
         return $root.'?'.$queryString;
     }
 }
