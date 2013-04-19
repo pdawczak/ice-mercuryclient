@@ -3,6 +3,7 @@
 namespace Ice\MercuryClientBundle\PaymentPlan;
 
 use Ice\MercuryClientBundle\Entity\Receivable;
+use Ice\MercuryClientBundle\Entity\PaymentPlanInterface;
 
 class CertificateAndDiplomaThreeInstalments implements PaymentPlanInterface
 {

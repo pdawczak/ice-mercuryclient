@@ -1,7 +1,8 @@
 <?php
 namespace Ice\MercuryClientBundle\External\Entity;
 
-interface CourseInterface {
+interface CourseInterface
+{
     /**
      * The four letter CUFS cost centre for this course's fees
      *

@@ -6,7 +6,7 @@ use Guzzle\Http\Exception\BadResponseException;
 use Guzzle\Service\Client;
 use Doctrine\Common\Collections\ArrayCollection;
 use Guzzle\Service\Command\DefaultRequestSerializer;
-use Ice\MercuryClientBundle\Builder\NewOrderBuilder;
+use Ice\MercuryClientBundle\Builder\OrderBuilder;
 use Ice\MercuryClientBundle\Entity\Order;
 use Guzzle\Service\Command\OperationCommand;
 use Ice\MercuryClientBundle\Entity\TransactionRequest;
@@ -55,11 +55,11 @@ class MercuryClient
     }
 
     /**
-     * @return NewOrderBuilder
+     * @return OrderBuilder
      */
     public function getNewOrderBuilder()
     {
-        return new NewOrderBuilder();
+        return new OrderBuilder();
     }
 
     /**

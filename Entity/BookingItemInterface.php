@@ -1,7 +1,15 @@
 <?php
 namespace Ice\MercuryClientBundle\Entity;
 
-interface BookingItemInterface {
+interface BookingItemInterface
+{
+    /**
+     * Booking item unique ID
+     *
+     * @return int
+     */
+    public function getId();
+
     /**
      * A line item description
      *

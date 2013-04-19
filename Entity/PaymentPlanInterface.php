@@ -1,6 +1,6 @@
 <?php
 
-namespace Ice\MercuryClientBundle\PaymentPlan;
+namespace Ice\MercuryClientBundle\Entity;
 
 use Ice\MercuryClientBundle\Entity\Receivable;
 

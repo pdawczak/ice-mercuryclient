@@ -30,6 +30,12 @@ class LineItem{
     private $amount;
 
     /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $externalId;
+
+    /**
      * @return int
      */
     public function getAmount()
@@ -99,5 +105,23 @@ class LineItem{
     {
         $this->id = $id;
         return $this;
+    }
+
+    /**
+     * @param string $externalId
+     * @return LineItem
+     */
+    public function setExternalId($externalId)
+    {
+        $this->externalId = $externalId;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExternalId()
+    {
+        return $this->externalId;
     }
 }
