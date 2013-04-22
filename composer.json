@@ -13,8 +13,17 @@
             "email": "stuart.chapman@admin.cam.ac.uk"
         }
     ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://crampon.internal.admin.cam.ac.uk/satis/web"
+        }
+    ],
     "require": {
-        "misd/guzzle-bundle": "@stable"
+        "misd/guzzle-bundle": "@stable",
+        "ice/veritasclient-bundle": "dev-trunk",
+        "ice/minervaclient-bundle": "dev-trunk",
+        "ice/janusclient-bundle": "dev-trunk"
     },
     "autoload": {
         "psr-0": {
