@@ -9,7 +9,6 @@ class AdvancedDiplomaSixInstalments1315NovemberTest extends \PHPUnit_Framework_T
 {
     public function testCorrectReceivablesCreated()
     {
-        $now = new \DateTime();
         $instalmentTwoDate = new \DateTime('2013-11-01');
         $instalmentThreeDate = new \DateTime('2014-02-01');
         $instalmentFourDate = new \DateTime('2014-08-01');
@@ -24,7 +23,7 @@ class AdvancedDiplomaSixInstalments1315NovemberTest extends \PHPUnit_Framework_T
 
         $firstInstalment = $receivables[0];
         $this->assertEquals(37400, $firstInstalment->getAmount());
-        $this->assertEquals($now, $firstInstalment->getDueDate());
+        $this->assertEquals(null, $firstInstalment->getDueDate());
 
         $secondInstalment = $receivables[1];
         $this->assertEquals(37400, $secondInstalment->getAmount());

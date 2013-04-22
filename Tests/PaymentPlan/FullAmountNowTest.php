@@ -9,7 +9,6 @@ class FullAmountNowTest extends \PHPUnit_Framework_TestCase
 {
     public function testCorrectReceivablesCreated()
     {
-        $now = new \DateTime();
 
         $plan = new FullAmountNow();
         /** @var $receivables Receivable[] */
@@ -19,6 +18,6 @@ class FullAmountNowTest extends \PHPUnit_Framework_TestCase
 
         $instalment = $receivables[0];
         $this->assertEquals(1000, $instalment->getAmount());
-        $this->assertEquals($now, $instalment->getDueDate());
+        $this->assertEquals(null, $instalment->getDueDate());
     }
 }

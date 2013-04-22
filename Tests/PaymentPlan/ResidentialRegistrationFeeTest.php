@@ -9,7 +9,6 @@ class ResidentialRegistrationFeeTest extends \PHPUnit_Framework_TestCase
 {
     public function testCorrectReceivablesCreatedForNonAccommodationBooking()
     {
-        $now = new \DateTime();
         $courseStartDate = new \DateTime("+6 week");
         $twoWeeksBeforeCourseStart = new \DateTime("+4 week");
 
@@ -21,7 +20,7 @@ class ResidentialRegistrationFeeTest extends \PHPUnit_Framework_TestCase
 
         $firstInstalment = $receivables[0];
         $this->assertEquals(3600, $firstInstalment->getAmount());
-        $this->assertEquals($now, $firstInstalment->getDueDate());
+        $this->assertEquals(null, $firstInstalment->getDueDate());
 
         $secondInstalment = $receivables[1];
         $this->assertEquals(20400, $secondInstalment->getAmount());
