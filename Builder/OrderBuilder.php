@@ -1,17 +1,16 @@
 <?php
 namespace Ice\MercuryClientBundle\Builder;
 
-use Ice\MercuryClientBundle\Entity\AccountInterface;
+use Ice\JanusClientBundle\Entity\User;
 use Ice\MercuryClientBundle\Entity\LineItem;
 use Ice\MercuryClientBundle\Entity\Order;
 use Ice\MercuryClientBundle\Entity\PaymentPlanInterface;
 use Ice\MercuryClientBundle\Entity\Suborder;
 use Ice\MercuryClientBundle\Entity\PaymentGroup;
+use Ice\MinervaClientBundle\Entity\Booking;
+use Ice\VeritasClientBundle\Entity\Course;
 use Ice\VeritasClientBundle\Service\VeritasClient;
 
-use Ice\MercuryClientBundle\External\Entity\CourseInterface;
-use Ice\MercuryClientBundle\Entity\BookingInterface;
-use Ice\MercuryClientBundle\Entity\BookingItemInterface;
 
 class OrderBuilder
 {
@@ -57,10 +56,10 @@ class OrderBuilder
     }
 
     /**
-     * @param AccountInterface $account
+     * @param User $account
      * @return OrderBuilder
      */
-    public function setCustomerByAccount(AccountInterface $account)
+    public function setCustomerByAccount(User $account)
     {
         $this->order->setIceId($account->getUsername())
             ->setCustomerTitle($account->getTitle())
@@ -72,13 +71,13 @@ class OrderBuilder
     }
 
     /**
-     * @param BookingInterface $booking
+     * @param Booking $booking
      * @param PaymentPlanInterface $paymentPlan
-     * @param CourseInterface $course
+     * @param Course $course
      * @return OrderBuilder
      * @throws \LogicException
      */
-    public function addNewBooking(BookingInterface $booking, PaymentPlanInterface $paymentPlan, CourseInterface $course = null)
+    public function addNewBooking(Booking $booking, PaymentPlanInterface $paymentPlan, Course $course = null)
     {
         $suborder = new Suborder();
         $paymentGroup = new PaymentGroup();
@@ -87,12 +86,12 @@ class OrderBuilder
             throw new \LogicException("Course must be given or veritas client must be set before a booking can be added");
         }
         if (!$course) {
-            $course = $this->getVeritasClient()->getCourse($booking->getCourseId());
+            $course = $this->getVeritasClient()->getCourse($booking->getAcademicInformation()->getCourseId());
         }
 
         $paymentGroup->setReceivables($paymentPlan->getReceivables(
                 $course->getStartDate(),
-                $booking->getTotalPrice())
+                $booking->getBookingTotalPriceInPence())
         );
 
         $suborder
@@ -101,12 +100,12 @@ class OrderBuilder
             ->setPaymentGroup($paymentGroup)
             ->setPaymentPlanDescription($paymentPlan->getShortDescription());
 
-        foreach ($booking->getItems() as $item) {
+        foreach ($booking->getBookingItems() as $item) {
             $suborder->addLineItem(
                 (new LineItem())
                     ->setDescription($item->getDescription())
                     ->setAmount($item->getPrice())
-                    ->setExternalId('BOOKINGITEM:' . $item->getId())
+                    ->setExternalId('BOOKINGITEM:' . $item->getCode())
                     ->setCostCentre($course->getCostCentre())
             );
         }
