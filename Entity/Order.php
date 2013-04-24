@@ -79,6 +79,18 @@ class Order{
      * @var string
      * @JMS\Type("string")
      */
+    private $customerTown;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $customerCounty;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
+     */
     private $customerPostcode;
 
     /**
@@ -449,6 +461,11 @@ class Order{
         return $total;
     }
 
+    /**
+     * Get the full name in the format Title First Middle Last
+     *
+     * @return string
+     */
     public function getCustomerFullName()
     {
         $names = array(
@@ -461,5 +478,41 @@ class Order{
         $names = array_filter($names);
 
         return implode(" ", $names);
+    }
+
+    /**
+     * @param string $customerCounty
+     * @return Order
+     */
+    public function setCustomerCounty($customerCounty)
+    {
+        $this->customerCounty = $customerCounty;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerCounty()
+    {
+        return $this->customerCounty;
+    }
+
+    /**
+     * @param string $customerTown
+     * @return Order
+     */
+    public function setCustomerTown($customerTown)
+    {
+        $this->customerTown = $customerTown;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerTown()
+    {
+        return $this->customerTown;
     }
 }
