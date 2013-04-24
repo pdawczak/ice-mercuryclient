@@ -19,6 +19,17 @@
             "parameters": {
             }
         },
+        "GetTransactionRequest": {
+            "httpMethod": "GET",
+            "uri" : "transactionrequest/{id}",
+            "responseClass": "Ice\\MercuryClientBundle\\Entity\\TransactionRequest",
+            "parameters": {
+                "id":{
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
         "GetSuborderGroup": {
             "httpMethod": "GET",
             "uri" : "subordergroup/{id}",

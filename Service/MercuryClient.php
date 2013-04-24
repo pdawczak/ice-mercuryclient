@@ -47,6 +47,15 @@ class MercuryClient
     }
 
     /**
+     * @param int $id
+     * @return \Ice\MercuryClientBundle\Entity\TransactionRequest
+     */
+    public function getTransactionRequestById($id)
+    {
+        return $this->getRestClient()->getCommand('GetTransactionRequest', array('id' => $id))->execute();
+    }
+
+    /**
      * @return \Ice\MercuryClientBundle\Entity\Order[]|ArrayCollection
      */
     public function findAllOrders()
