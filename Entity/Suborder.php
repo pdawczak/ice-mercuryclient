@@ -48,6 +48,12 @@ class Suborder{
     private $externalId;
 
     /**
+     * @var Receivable[]
+     * @JMS\Type("array<Ice\MercuryClientBundle\Entity\Receivable>")
+     */
+    private $newReceivables;
+
+    /**
      * Initialise ArrayCollections
      */
     public function __construct(){
@@ -200,5 +206,23 @@ class Suborder{
     public function getExternalId()
     {
         return $this->externalId;
+    }
+
+    /**
+     * @param $newReceivables
+     * @return Suborder
+     */
+    public function setNewReceivables(array $newReceivables)
+    {
+        $this->newReceivables = $newReceivables;
+        return $this;
+    }
+
+    /**
+     * @return Receivable[]
+     */
+    public function getNewReceivables()
+    {
+        return $this->newReceivables;
     }
 }

@@ -89,7 +89,7 @@ class OrderBuilder
             $course = $this->getVeritasClient()->getCourse($booking->getAcademicInformation()->getCourseId());
         }
 
-        $paymentGroup->setReceivables($paymentPlan->getReceivables(
+        $suborder->setNewReceivables($paymentPlan->getReceivables(
                 $course->getStartDate(),
                 $booking->getBookingTotalPriceInPence())
         );
