@@ -54,6 +54,19 @@
                 }
             }
         },
+        "CreateTransaction": {
+            "httpMethod": "POST",
+            "uri": "transactions",
+            "responseClass": "Ice\\MercuryClientBundle\\Entity\\Transaction",
+            "parameters": {
+                "transaction" : {
+                    "location":"body",
+                    "sentAs":"json",
+                    "required":true,
+                    "instanceOf": "Ice\\MercuryClientBundle\\Entity\\Transaction"
+                }
+            }
+        },
         "CreateTransactionRequest": {
             "httpMethod": "POST",
             "uri": "transactionrequests",

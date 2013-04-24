@@ -7,8 +7,10 @@ use Guzzle\Service\Client;
 use Doctrine\Common\Collections\ArrayCollection;
 use Guzzle\Service\Command\DefaultRequestSerializer;
 use Ice\MercuryClientBundle\Builder\OrderBuilder;
+use Ice\MercuryClientBundle\Builder\TransactionBuilder;
 use Ice\MercuryClientBundle\Entity\Order;
 use Guzzle\Service\Command\OperationCommand;
+use Ice\MercuryClientBundle\Entity\Transaction;
 use Ice\MercuryClientBundle\Entity\TransactionRequest;
 use Ice\MercuryClientBundle\Entity\TransactionRequestComponent;
 
@@ -72,6 +74,14 @@ class MercuryClient
     }
 
     /**
+     * @return TransactionBuilder
+     */
+    public function getNewTransactionBuilder()
+    {
+        return new TransactionBuilder();
+    }
+
+    /**
      * @param Order $order
      * @return Order
      */
@@ -80,6 +90,25 @@ class MercuryClient
         try {
             /** @var $command OperationCommand */
             $command = $this->getRestClient()->getCommand('CreateOrder', array('order' => $order));
+            return $command->execute();
+        } catch (BadResponseException $e) {
+            $response = $e->getResponse()->__toString();
+            //TODO: Translate into a usable error
+            throw $e;
+        }
+    }
+
+    /**
+     * @param Transaction $transaction
+     * @return Transaction
+     */
+    public function createTransaction(Transaction $transaction)
+    {
+        try {
+            /** @var $command OperationCommand */
+            $command = $this->getRestClient()->getCommand('CreateTransaction', array('transaction' => $transaction));
+            $command->prepare();
+            $body = $command->getRequest()->__toString();
             return $command->execute();
         } catch (BadResponseException $e) {
             $response = $e->getResponse()->__toString();

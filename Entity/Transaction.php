@@ -10,16 +10,34 @@ use JMS\Serializer\Annotation as JMS;
 class Transaction
 {
     /**
-     * @var integer $id
+     * @var int
      * @JMS\Type("integer")
      */
     private $id;
 
     /**
-     * @var int $amountReceived
-     * @JMS\Type("string")
+     * @var int
+     * @JMS\Type("integer")
      */
     private $amountReceived;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $currency;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $method;
+
+    /**
+     * @var TransactionRequest
+     * @JMS\Type("Ice\MercuryClientBundle\Entity\TransactionRequest")
+     */
+    private $transactionRequest;
 
     /**
      * @param int $amountReceived
@@ -55,5 +73,59 @@ class Transaction
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @param string $currency
+     * @return Transaction
+     */
+    public function setCurrency($currency)
+    {
+        $this->currency = $currency;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+
+    /**
+     * @param string $method
+     * @return Transaction
+     */
+    public function setMethod($method)
+    {
+        $this->method = $method;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMethod()
+    {
+        return $this->method;
+    }
+
+    /**
+     * @param \Ice\MercuryClientBundle\Entity\TransactionRequest $transactionRequest
+     * @return Transaction
+     */
+    public function setTransactionRequest($transactionRequest)
+    {
+        $this->transactionRequest = $transactionRequest;
+        return $this;
+    }
+
+    /**
+     * @return \Ice\MercuryClientBundle\Entity\TransactionRequest
+     */
+    public function getTransactionRequest()
+    {
+        return $this->transactionRequest;
     }
 }
