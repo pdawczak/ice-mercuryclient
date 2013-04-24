@@ -73,17 +73,24 @@ class MercuryClient
             $command = $this->getRestClient()->getCommand('CreateOrder', array('order' => $order));
             return $command->execute();
         } catch (BadResponseException $e) {
+            $response = $e->getResponse()->__toString();
             //TODO: Translate into a usable error
             throw $e;
         }
     }
 
-    public function requestOutstandingOnlineTransactionsByOrder(Order $order){
+    /**
+     * @param Order $order
+     * @return TransactionRequest
+     * @throws \Exception|\Guzzle\Http\Exception\BadResponseException
+     */
+    public function requestOutstandingOnlineTransactionsByOrder(Order $order)
+    {
         $request = new TransactionRequest();
         $components = array();
-        foreach($order->getSuborders() as $suborder){
-            foreach($suborder->getPaymentGroup()->getReceivables() as $receivable){
-                if($receivable->getDueDate() < new \DateTime()){
+        foreach ($order->getSuborders() as $suborder) {
+            foreach ($suborder->getPaymentGroup()->getReceivables() as $receivable) {
+                if ($receivable->getDueDate() < new \DateTime()) {
                     $component = new TransactionRequestComponent();
                     $component->setRequestAmount($receivable->getAmount());
                     $component->setPaymentGroup($suborder->getPaymentGroup());
@@ -93,6 +100,10 @@ class MercuryClient
         }
         $request->setComponents($components);
         $request->setIceId($order->getIceId());
+
+        if ($request->getTotalRequestAmount() === 0) {
+            return $request;
+        }
 
         try {
             /** @var $command OperationCommand */
