@@ -51,6 +51,12 @@ class TransactionRequest{
     private $created;
 
     /**
+     * @var Transaction $transaction
+     * @JMS\Type("Ice\MercuryClientBundle\Entity\Transaction")
+     */
+    private $transaction;
+
+    /**
      * @return int
      */
     public function getId()
@@ -200,5 +206,23 @@ class TransactionRequest{
         );
         $queryString = http_build_query(array_merge($extraParams, $params));
         return $root.'?'.$queryString;
+    }
+
+    /**
+     * @param \Ice\MercuryClientBundle\Entity\Transaction $transaction
+     * @return TransactionRequest
+     */
+    public function setTransaction($transaction)
+    {
+        $this->transaction = $transaction;
+        return $this;
+    }
+
+    /**
+     * @return \Ice\MercuryClientBundle\Entity\Transaction
+     */
+    public function getTransaction()
+    {
+        return $this->transaction;
     }
 }
