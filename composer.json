@@ -22,8 +22,9 @@
     "require": {
         "misd/guzzle-bundle": "@stable",
         "ice/veritasclient-bundle": "dev-trunk",
-        "ice/minervaclient-bundle": "dev-trunk",
-        "ice/janusclient-bundle": "dev-trunk"
+        "ice/minervaclient-bundle": "0.1.*",
+        "ice/janusclient-bundle": "dev-trunk",
+        "jms/serializer-bundle": "0.12.*@dev"
     },
     "autoload": {
         "psr-0": {
