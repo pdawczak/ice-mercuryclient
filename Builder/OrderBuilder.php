@@ -8,6 +8,7 @@ use Ice\MercuryClientBundle\Entity\PaymentPlanInterface;
 use Ice\MercuryClientBundle\Entity\Suborder;
 use Ice\MercuryClientBundle\Entity\PaymentGroup;
 use Ice\MinervaClientBundle\Entity\Booking;
+use Ice\VeritasClientBundle\Entity\BookingItem;
 use Ice\VeritasClientBundle\Entity\Course;
 use Ice\VeritasClientBundle\Service\VeritasClient;
 
@@ -71,11 +72,13 @@ class OrderBuilder
     }
 
     /**
-     * @param Booking $booking
+     * @param Booking              $booking
      * @param PaymentPlanInterface $paymentPlan
-     * @param Course $course
-     * @return OrderBuilder
+     * @param Course               $course
+     *
      * @throws \LogicException
+     * @throws \RuntimeException
+     * @return OrderBuilder
      */
     public function addNewBooking(Booking $booking, PaymentPlanInterface $paymentPlan, Course $course = null)
     {
@@ -96,17 +99,28 @@ class OrderBuilder
 
         $suborder
             ->setDescription($course->getTitle())
-            ->setExternalId('BOOKING:' . $booking->getId())
+            ->setExternalId($booking->getSuborderGroup())
             ->setPaymentGroup($paymentGroup)
             ->setPaymentPlanDescription($paymentPlan->getShortDescription());
 
         foreach ($booking->getBookingItems() as $item) {
+            /** @var BookingItem $matchingCourseItem */
+            $matchingCourseItem = $course->getBookingItems()->filter(function (BookingItem $courseItem) use ($item) {
+                return $courseItem->getCode() === $item->getCode();
+            })->first();
+
+            if (!$matchingCourseItem) {
+                throw new \RuntimeException("Could not find a Course BookingItem that matches the Booking BookingItem.");
+            }
+
+            $financeCode = $matchingCourseItem->getFinanceCode();
+
             $suborder->addLineItem(
                 (new LineItem())
                     ->setDescription($item->getDescription())
                     ->setAmount($item->getPrice())
-                    ->setExternalId('BOOKINGITEM:' . $item->getCode())
-                    ->setCostCentre($course->getCostCentre())
+                    ->setExternalId($item->getCode())
+                    ->setCostCentre($financeCode) // Finance code is what is needed. Cost centre will be renamed to finance code in Mercury.
             );
         }
         $this->order->addSuborder($suborder);
