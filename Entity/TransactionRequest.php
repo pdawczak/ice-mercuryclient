@@ -57,6 +57,12 @@ class TransactionRequest{
     private $transaction;
 
     /**
+     * @var int
+     * @JMS\Type("integer")
+     */
+    private $excludeFromCufs = 0;
+
+    /**
      * @return int
      */
     public function getId()
@@ -224,5 +230,23 @@ class TransactionRequest{
     public function getTransaction()
     {
         return $this->transaction;
+    }
+
+    /**
+     * @param int $excludeFromCufs
+     * @return TransactionRequest
+     */
+    public function setExcludeFromCufs($excludeFromCufs)
+    {
+        $this->excludeFromCufs = $excludeFromCufs?1:0;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getExcludeFromCufs()
+    {
+        return $this->excludeFromCufs;
     }
 }
