@@ -11,6 +11,7 @@ use Ice\MinervaClientBundle\Entity\Booking;
 use Ice\VeritasClientBundle\Entity\BookingItem;
 use Ice\VeritasClientBundle\Entity\Course;
 use Ice\VeritasClientBundle\Service\VeritasClient;
+use Ice\JanusClientBundle\Service\JanusClient;
 
 
 class OrderBuilder
@@ -24,6 +25,11 @@ class OrderBuilder
      * @var VeritasClient
      */
     protected $veritasClient;
+
+    /**
+     * @var JanusClient
+     */
+    protected $janusClient;
 
     /**
      * Pass in an existing order entity, if appropriate, otherwise a new one will be created
@@ -57,6 +63,24 @@ class OrderBuilder
     }
 
     /**
+     * @param \Ice\JanusClientBundle\Service\JanusClient $janusClient
+     * @return OrderBuilder
+     */
+    public function setJanusClient($janusClient)
+    {
+        $this->janusClient = $janusClient;
+        return $this;
+    }
+
+    /**
+     * @return \Ice\JanusClientBundle\Service\JanusClient
+     */
+    public function getJanusClient()
+    {
+        return $this->janusClient;
+    }
+
+    /**
      * @param User $account
      * @return OrderBuilder
      */
@@ -80,7 +104,7 @@ class OrderBuilder
      * @throws \RuntimeException
      * @return OrderBuilder
      */
-    public function addNewBooking(Booking $booking, PaymentPlanInterface $paymentPlan, Course $course = null)
+    public function addNewBooking(Booking $booking, PaymentPlanInterface $paymentPlan, Course $course = null, User $delegate = null)
     {
         $suborder = new Suborder();
         $paymentGroup = new PaymentGroup();
@@ -92,6 +116,15 @@ class OrderBuilder
             $course = $this->getVeritasClient()->getCourse($booking->getAcademicInformation()->getCourseId());
         }
 
+        if (!$delegate && $this->getJanusClient()) {
+            try {
+                $delegate = $this->getJanusClient()->getUser($booking->getAcademicInformation()->getIceId());
+            } catch (\Exception $e) {
+                //No big deal - Mercury will be missing some delegate attributes.
+                $delegate = null;
+            }
+        }
+
         $suborder->setNewReceivables($paymentPlan->getReceivables(
                 $course->getStartDate(),
                 $booking->getBookingTotalPriceInPence())
@@ -100,6 +133,13 @@ class OrderBuilder
         $paymentGroup
             ->setAttributeByNameAndValue('booking_id', $booking->getId())
             ->setAttributeByNameAndValue('delegate_ice_id', $booking->getAcademicInformation()->getIceId());
+
+        if ($delegate) {
+            $paymentGroup
+                ->setAttributeByNameAndValue('delegate_first_names', $delegate->getFirstNames())
+                ->setAttributeByNameAndValue('delegate_last_names', $delegate->getLastNames());
+        }
+
 
         $suborder
             ->setDescription($course->getTitle())
