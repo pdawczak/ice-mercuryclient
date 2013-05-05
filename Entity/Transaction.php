@@ -36,6 +36,7 @@ class Transaction
     /**
      * @var TransactionRequest
      * @JMS\Type("Ice\MercuryClientBundle\Entity\TransactionRequest")
+     * @JMS\Accessor
      */
     private $transactionRequest;
 

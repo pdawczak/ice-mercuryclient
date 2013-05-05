@@ -1,10 +1,12 @@
 <?php
 namespace Ice\MercuryClientBundle\Entity;
 
+use Ice\MercuryClientBundle\Exception\AttributeNotFoundException;
 use JMS\Serializer\Annotation as JMS;
 use Doctrine\Common\Collections\ArrayCollection;
 
-class PaymentGroup{
+class PaymentGroup
+{
     /**
      * @var int
      * @JMS\Type("integer")
@@ -24,11 +26,19 @@ class PaymentGroup{
     private $suborders;
 
     /**
+     * @var PaymentGroupAttribute[]|ArrayCollection
+     * @JMS\Type("ArrayCollection<Ice\MercuryClientBundle\Entity\PaymentGroupAttribute>")
+     */
+    private $attributes;
+
+    /**
      * Initialise ArrayCollections
      */
-    public function __construct(){
+    public function __construct()
+    {
         $this->receivables = new ArrayCollection();
         $this->suborders = new ArrayCollection();
+        $this->attributes = new ArrayCollection();
     }
 
     /**
@@ -81,10 +91,60 @@ class PaymentGroup{
      */
     public function setSuborders($suborders)
     {
-        foreach($suborders as $suborder){
+        foreach ($suborders as $suborder) {
             $suborder->setPaymentGroup($this);
         }
         $this->suborders = $suborders;
         return $this;
+    }
+
+    /**
+     * @param PaymentGroupAttribute[]|ArrayCollection $attributes
+     * @return PaymentGroup
+     */
+    public function setAttributes($attributes)
+    {
+        $this->attributes = $attributes;
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     * @param $value
+     * @return PaymentGroup
+     */
+    public function setAttributeByNameAndValue($name, $value)
+    {
+        try {
+            $this->getAttributeByName($name)->setValue($value);
+        } catch (AttributeNotFoundException $e) {
+            $newAttribute = new PaymentGroupAttribute();
+            $newAttribute->setName($name)->setValue($value);
+            $this->attributes->add($newAttribute);
+        }
+        return $this;
+    }
+
+    /**
+     * @param $name
+     * @return PaymentGroupAttribute
+     * @throws \Ice\MercuryClientBundle\Exception\AttributeNotFoundException
+     */
+    public function getAttributeByName($name)
+    {
+        foreach ($this->attributes as $attribute) {
+            if ($attribute->getName() === $name) {
+                return $attribute;
+            }
+        }
+        throw new AttributeNotFoundException("Attribute '$name' does not exist on payment group " . $this->getId());
+    }
+
+    /**
+     * @return ArrayCollection|PaymentGroupAttribute[]
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
     }
 }
