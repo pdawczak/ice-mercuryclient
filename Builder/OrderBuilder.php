@@ -97,6 +97,10 @@ class OrderBuilder
                 $booking->getBookingTotalPriceInPence())
         );
 
+        $paymentGroup
+            ->setAttributeByNameAndValue('booking_id', $booking->getId())
+            ->setAttributeByNameAndValue('delegate_ice_id', $booking->getAcademicInformation()->getIceId())        ;
+
         $suborder
             ->setDescription($course->getTitle())
             ->setExternalId($booking->getSuborderGroup())
