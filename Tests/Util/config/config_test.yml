@@ -1,0 +1,11 @@
+framework:
+    session: ~
+    secret: "notsosecret"
+
+jms_serializer:
+    metadata:
+        cache: none
+
+#IceMercuryClient configuration
+ice_mercury_client:
+    base_url: https://mercury.dev.ice.internal.admin.cam.ac.uk/app_test.php/api/
