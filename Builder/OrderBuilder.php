@@ -99,7 +99,7 @@ class OrderBuilder
 
         $paymentGroup
             ->setAttributeByNameAndValue('booking_id', $booking->getId())
-            ->setAttributeByNameAndValue('delegate_ice_id', $booking->getAcademicInformation()->getIceId())        ;
+            ->setAttributeByNameAndValue('delegate_ice_id', $booking->getAcademicInformation()->getIceId());
 
         $suborder
             ->setDescription($course->getTitle())
