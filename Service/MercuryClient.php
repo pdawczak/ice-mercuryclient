@@ -58,6 +58,15 @@ class MercuryClient
     }
 
     /**
+     * @param int $reference
+     * @return \Ice\MercuryClientBundle\Entity\TransactionRequest
+     */
+    public function getTransactionRequestByReference($reference)
+    {
+        return $this->getRestClient()->getCommand('GetTransactionRequestByReference', array('reference' => $reference))->execute();
+    }
+
+    /**
      * @return \Ice\MercuryClientBundle\Entity\Order[]|ArrayCollection
      */
     public function findAllOrders()
