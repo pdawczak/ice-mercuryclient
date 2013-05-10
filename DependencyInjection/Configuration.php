@@ -29,6 +29,12 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('base_url')
                     ->info('Base URL for the API.')
                 ->end()
+                ->scalarNode('username')
+                    ->info('Username to authenticate against the API.')
+                ->end()
+                ->scalarNode('password')
+                    ->info('Password to authenticate against the API.')
+                ->end()
             ->end();
 
         return $treeBuilder;

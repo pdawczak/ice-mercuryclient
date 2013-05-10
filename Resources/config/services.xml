@@ -23,6 +23,8 @@
                 public="false">
             <tag name="guzzle.client"/>
             <argument>%ice_mercury_client.base_url%</argument>
+            <argument>%ice_veritas_client.username%</argument>
+            <argument>%ice_veritas_client.password%</argument>
             <call method="setDescription">
                 <argument type="service" id="mercury_rest_client.service_description"/>
             </call>
