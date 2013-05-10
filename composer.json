@@ -16,7 +16,7 @@
     "repositories": [
         {
             "type": "composer",
-            "url": "http://crampon.internal.admin.cam.ac.uk/satis/web"
+            "url": "http://satis.internal.admin.cam.ac.uk"
         },
         {
             "type": "vcs",
