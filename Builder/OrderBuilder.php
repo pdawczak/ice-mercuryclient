@@ -132,7 +132,9 @@ class OrderBuilder
 
         $paymentGroup
             ->setAttributeByNameAndValue('booking_id', $booking->getId())
-            ->setAttributeByNameAndValue('delegate_ice_id', $booking->getAcademicInformation()->getIceId());
+            ->setAttributeByNameAndValue('delegate_ice_id', $booking->getAcademicInformation()->getIceId())
+            ->setAttributeByNameAndValue('course_id', $booking->getAcademicInformation()->getCourseId())
+        ;
 
         if ($delegate) {
             $paymentGroup
