@@ -125,10 +125,16 @@ class OrderBuilder
             }
         }
 
-        $suborder->setNewReceivables($paymentPlan->getReceivables(
-                $course->getStartDate(),
-                $booking->getBookingTotalPriceInPence())
+        $receivables = $paymentPlan->getReceivables(
+            $course->getStartDate(),
+            $booking->getBookingTotalPriceInPence())
         );
+
+        $suborder->setNewReceivables($receivables);
+
+        if ($receivables) {
+            $paymentGroup->setAttributeByNameAndValue('agreed_payment_method', $receivables[0]->getMethod());
+        }
 
         $paymentGroup
             ->setAttributeByNameAndValue('booking_id', $booking->getId())
