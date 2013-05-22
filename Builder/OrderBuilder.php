@@ -127,7 +127,7 @@ class OrderBuilder
 
         $receivables = $paymentPlan->getReceivables(
             $course->getStartDate(),
-            $booking->getBookingTotalPriceInPence())
+            $booking->getBookingTotalPriceInPence()
         );
 
         $suborder->setNewReceivables($receivables);
