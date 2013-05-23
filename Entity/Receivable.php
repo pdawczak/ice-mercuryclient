@@ -11,6 +11,11 @@ class Receivable{
     const METHOD_RECURRING = 'RECUR';
     const METHOD_ONLINE = 'ONLINE';
     const METHOD_MANUAL = 'MANUAL';
+    const METHOD_BACS = 'BACS';
+    const METHOD_CHEQUE = 'CHEQUE';
+    const METHOD_INVOICE = 'INVOICE';
+    const METHOD_PDQ = 'PDQ';
+    const METHOD_STUDENT_LOAN = 'STUDENT_LOAN';
 
     /**
      * @var int
