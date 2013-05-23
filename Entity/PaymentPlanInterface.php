@@ -16,4 +16,11 @@ interface PaymentPlanInterface {
     public function getShortDescription();
 
     public function getLongDescription();
+
+    /**
+     * @param string $method Payment method constant
+     *
+     * @return PaymentPlanInterface
+     */
+    public function setPaymentMethod($method);
 }

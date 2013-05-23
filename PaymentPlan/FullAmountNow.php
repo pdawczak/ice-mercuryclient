@@ -2,10 +2,11 @@
 
 namespace Ice\MercuryClientBundle\PaymentPlan;
 
+use Ice\MercuryClientBundle\Entity\AbstractPaymentPlan;
 use Ice\MercuryClientBundle\Entity\Receivable;
 use Ice\MercuryClientBundle\Entity\PaymentPlanInterface;
 
-class FullAmountNow implements PaymentPlanInterface
+class FullAmountNow extends AbstractPaymentPlan implements PaymentPlanInterface
 {
     /**
      * {@inheritDoc}
@@ -15,12 +16,19 @@ class FullAmountNow implements PaymentPlanInterface
         $instalment = new Receivable();
         $instalment
             ->setDueDate(null)
-            ->setAmount($total)
-            ->setMethod(Receivable::METHOD_ONLINE);
+            ->setAmount($total);
 
-        return array(
+        $receivables = array(
             $instalment,
         );
+
+        if ($this->paymentMethod) {
+            foreach ($receivables as $receivable) {
+                $receivable->setMethod($this->paymentMethod);
+            }
+        }
+
+        return $receivables;
     }
 
     /**
