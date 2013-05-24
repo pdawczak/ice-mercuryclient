@@ -2,6 +2,7 @@
 namespace Ice\MercuryClientBundle\Builder;
 
 use Ice\JanusClientBundle\Entity\User;
+use Ice\MercuryClientBundle\Entity\CustomerInterface;
 use Ice\MercuryClientBundle\Entity\LineItem;
 use Ice\MercuryClientBundle\Entity\Order;
 use Ice\MercuryClientBundle\Entity\PaymentPlanInterface;
@@ -92,6 +93,30 @@ class OrderBuilder
             ->setCustomerMiddleNames($account->getMiddleNames())
             ->setCustomerLastNames($account->getLastNames())
             ->setCustomerEmail($account->getEmail());
+        return $this;
+    }
+
+    public function setCustomer(CustomerInterface $customer)
+    {
+        $this->order
+            ->setIceId($customer->getIceId())
+            ->setCustomerTitle($customer->getTitle())
+            ->setCustomerFirstNames($customer->getFirstNames())
+            ->setCustomerMiddleNames($customer->getMiddleNames())
+            ->setCustomerLastNames($customer->getLastNames())
+            ->setCustomerEmail($customer->getEmail())
+            ->setCustomerTelephone($customer->getTelephone())
+            ->setCustomerMobile($customer->getMobile())
+            ->setCustomerAddress1($customer->getAddress1())
+            ->setCustomerAddress2($customer->getAddress2())
+            ->setCustomerAddress3($customer->getAddress3())
+            ->setCustomerAddress4($customer->getAddress4())
+            ->setCustomerTown($customer->getTown())
+            ->setCustomerCounty($customer->getCounty())
+            ->setCustomerPostcode($customer->getPostcode())
+            ->setCustomerCountry($customer->getCountry())
+        ;
+
         return $this;
     }
 
