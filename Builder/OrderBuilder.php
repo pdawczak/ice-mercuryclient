@@ -8,6 +8,7 @@ use Ice\MercuryClientBundle\Entity\Order;
 use Ice\MercuryClientBundle\Entity\PaymentPlanInterface;
 use Ice\MercuryClientBundle\Entity\Suborder;
 use Ice\MercuryClientBundle\Entity\PaymentGroup;
+use Ice\MercuryClientBundle\Exception\CapacityException;
 use Ice\MinervaClientBundle\Entity\Booking;
 use Ice\VeritasClientBundle\Entity\BookingItem;
 use Ice\VeritasClientBundle\Entity\Course;
@@ -114,16 +115,15 @@ class OrderBuilder
             ->setCustomerTown($customer->getTown())
             ->setCustomerCounty($customer->getCounty())
             ->setCustomerPostcode($customer->getPostcode())
-            ->setCustomerCountry($customer->getCountry())
-        ;
+            ->setCustomerCountry($customer->getCountry());
 
         return $this;
     }
 
     /**
-     * @param Booking              $booking
+     * @param Booking $booking
      * @param PaymentPlanInterface $paymentPlan
-     * @param Course               $course
+     * @param Course $course
      *
      * @throws \LogicException
      * @throws \RuntimeException
@@ -164,8 +164,7 @@ class OrderBuilder
         $paymentGroup
             ->setAttributeByNameAndValue('booking_id', $booking->getId())
             ->setAttributeByNameAndValue('delegate_ice_id', $booking->getAcademicInformation()->getIceId())
-            ->setAttributeByNameAndValue('course_id', $booking->getAcademicInformation()->getCourseId())
-        ;
+            ->setAttributeByNameAndValue('course_id', $booking->getAcademicInformation()->getCourseId());
 
         if ($delegate) {
             $paymentGroup
@@ -188,6 +187,17 @@ class OrderBuilder
 
             if (!$matchingCourseItem) {
                 throw new \RuntimeException("Could not find a Course BookingItem that matches the Booking BookingItem.");
+            }
+
+            //Check that all items have capacity available
+            if (!$booking->isAllocated()) {
+                if ($matchingCourseItem->getNumberAllocated() >= $matchingCourseItem->getCapacity()) {
+                    $e = (new CapacityException())
+                        ->setBooking($booking)
+                        ->setBookingItem($item)
+                        ->setCourseItem($matchingCourseItem);
+                    throw $e;
+                }
             }
 
             $financeCode = $matchingCourseItem->getFinanceCode();
