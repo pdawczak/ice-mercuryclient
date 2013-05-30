@@ -118,6 +118,12 @@ class Order{
     private $customerEmail;
 
     /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $reference;
+
+    /**
      * @var Suborder[]|ArrayCollection
      * @JMS\Type("ArrayCollection<Ice\MercuryClientBundle\Entity\Suborder>")
      */
@@ -515,4 +521,24 @@ class Order{
     {
         return $this->customerTown;
     }
+
+    /**
+     * @param string $reference
+     *
+     * @return Order
+     */
+    public function setReference($reference)
+    {
+        $this->reference = $reference;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReference()
+    {
+        return $this->reference;
+    }
+
 }
