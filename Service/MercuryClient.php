@@ -10,6 +10,7 @@ use Ice\MercuryClientBundle\Builder\OrderBuilder;
 use Ice\MercuryClientBundle\Builder\TransactionBuilder;
 use Ice\MercuryClientBundle\Entity\Order;
 use Guzzle\Service\Command\OperationCommand;
+use Ice\MercuryClientBundle\Entity\Receivable;
 use Ice\MercuryClientBundle\Entity\Transaction;
 use Ice\MercuryClientBundle\Entity\TransactionRequest;
 use Ice\MercuryClientBundle\Entity\TransactionRequestComponent;
@@ -137,7 +138,10 @@ class MercuryClient
         $components = array();
         foreach ($order->getSuborders() as $suborder) {
             foreach ($suborder->getPaymentGroup()->getReceivables() as $receivable) {
-                if ($receivable->getDueDate() < new \DateTime()) {
+                if (
+                    Receivable::METHOD_ONLINE === $receivable->getMethod() &&
+                    $receivable->getDueDate() < new \DateTime()
+                ) {
                     $component = new TransactionRequestComponent();
                     $component->setRequestAmount($receivable->getAmount());
                     $component->setPaymentGroup($suborder->getPaymentGroup());
