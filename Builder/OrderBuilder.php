@@ -180,6 +180,12 @@ class OrderBuilder
             ->setPaymentPlanDescription($paymentPlan->getShortDescription());
 
         foreach ($booking->getBookingItems() as $item) {
+
+            //Don't tell Mercury about booking items that have no value
+            if ($item->getPrice() === 0) {
+                continue;
+            }
+
             /** @var BookingItem $matchingCourseItem */
             $matchingCourseItem = $course->getBookingItems()->filter(function (BookingItem $courseItem) use ($item) {
                 return $courseItem->getCode() === $item->getCode();
