@@ -43,7 +43,8 @@ class AdvancedDiplomaSixInstalments1315February extends AbstractPaymentPlan impl
             ->setAmount($total * 0.16) // 16%
             ->setDueDate(new \DateTime('2015-05-01')); // 1 May 2015
 
-        return array(
+        /** @var Receivable[] $receivables */
+        $receivables =  array(
             $instalment1,
             $instalment2,
             $instalment3,
@@ -51,6 +52,14 @@ class AdvancedDiplomaSixInstalments1315February extends AbstractPaymentPlan impl
             $instalment5,
             $instalment6,
         );
+
+        if ($this->paymentMethod) {
+            foreach ($receivables as $receivable) {
+                $receivable->setMethod($this->paymentMethod);
+            }
+        }
+
+        return $receivables;
     }
 
 

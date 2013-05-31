@@ -28,11 +28,20 @@ class CertificateAndDiplomaThreeInstalments extends AbstractPaymentPlan implemen
             ->setAmount($total * 0.33) // 33%
             ->setDueDate(new \DateTime('2013-04-01')); // 1 April 2013
 
-        return array(
+        /** @var Receivable[] $receivables */
+        $receivables =  array(
             $instalment1,
             $instalment2,
             $instalment3,
         );
+
+        if ($this->paymentMethod) {
+            foreach ($receivables as $receivable) {
+                $receivable->setMethod($this->paymentMethod);
+            }
+        }
+
+        return $receivables;
     }
 
     /**

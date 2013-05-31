@@ -25,10 +25,19 @@ class ResidentialRegistrationFee extends AbstractPaymentPlan implements PaymentP
             ->setDueDate($courseStartDate->sub(new \DateInterval("P14D"))) // 2 weeks before course starts
         ;
 
-        return array(
+        /** @var Receivable[] $receivables */
+        $receivables =  array(
             $instalment1,
             $instalment2
         );
+
+        if ($this->paymentMethod) {
+            foreach ($receivables as $receivable) {
+                $receivable->setMethod($this->paymentMethod);
+            }
+        }
+
+        return $receivables;
     }
 
     /**
