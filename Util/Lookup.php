@@ -20,7 +20,7 @@ class Lookup
     public static function friendlyPaymentMethodDescription($method)
     {
         $mappings = [
-            Receivable::METHOD_ONLINE => 'Online',
+            Receivable::METHOD_ONLINE => 'Credit/debit card payment',
             Receivable::METHOD_MANUAL => 'Manual payment',
             Receivable::METHOD_BACS => 'BACS payment',
             Receivable::METHOD_CHEQUE => 'Cheque payment',
