@@ -12,6 +12,17 @@
                 }
             }
         },
+        "GetOrderByReference": {
+            "httpMethod": "GET",
+            "uri" : "order/by/reference/{reference}",
+            "responseClass": "Ice\\MercuryClientBundle\\Entity\\Order",
+            "parameters": {
+                "reference":{
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
         "GetOrders": {
             "httpMethod": "GET",
             "uri" : "orders",

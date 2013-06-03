@@ -50,6 +50,15 @@ class MercuryClient
     }
 
     /**
+     * @param string $reference
+     * @return \Ice\MercuryClientBundle\Entity\Order
+     */
+    public function findOrderByReference($reference)
+    {
+        return $this->getRestClient()->getCommand('GetOrderByReference', array('reference' => $reference))->execute();
+    }
+
+    /**
      * @param int $id
      * @return \Ice\MercuryClientBundle\Entity\TransactionRequest
      */
