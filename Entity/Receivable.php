@@ -4,7 +4,8 @@ namespace Ice\MercuryClientBundle\Entity;
 use JMS\Serializer\Annotation as JMS;
 use Doctrine\Common\Collections\ArrayCollection;
 
-class Receivable{
+class Receivable
+{
     /**
      * Constants to be used with setMethod
      */
@@ -50,7 +51,8 @@ class Receivable{
     /**
      * Initialise ArrayCollections
      */
-    public function __construct(){
+    public function __construct()
+    {
         $this->allocations = new ArrayCollection();
     }
 
@@ -132,7 +134,7 @@ class Receivable{
     public function getAmountAllocated()
     {
         $totalAllocated = 0;
-        foreach($this->getAllocations() as $allocation){
+        foreach ($this->getAllocations() as $allocation) {
             $totalAllocated += $allocation->getAmount();
         }
         return $totalAllocated;
@@ -143,7 +145,7 @@ class Receivable{
      */
     public function getAmountUnallocated()
     {
-        return $this->getAmount()-$this->getAmountAllocated();
+        return $this->getAmount() - $this->getAmountAllocated();
     }
 
     /**
@@ -151,7 +153,8 @@ class Receivable{
      *
      * @return bool
      */
-    public function isBalanced(){
+    public function isBalanced()
+    {
         return $this->getAmountAllocated() == $this->getAmount();
     }
 }
