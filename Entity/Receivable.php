@@ -125,4 +125,33 @@ class Receivable{
     {
         return $this->method;
     }
+
+    /**
+     * @return int
+     */
+    public function getAmountAllocated()
+    {
+        $totalAllocated = 0;
+        foreach($this->getAllocations() as $allocation){
+            $totalAllocated += $allocation->getAmount();
+        }
+        return $totalAllocated;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAmountUnallocated()
+    {
+        return $this->getAmount()-$this->getAmountAllocated();
+    }
+
+    /**
+     * True if allocations match amount originally owed
+     *
+     * @return bool
+     */
+    public function isBalanced(){
+        return $this->getAmountAllocated() == $this->getAmount();
+    }
 }
