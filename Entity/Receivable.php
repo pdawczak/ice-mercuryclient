@@ -1,6 +1,7 @@
 <?php
 namespace Ice\MercuryClientBundle\Entity;
 
+use Ice\MercuryClientBundle\Util\Lookup;
 use JMS\Serializer\Annotation as JMS;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -126,6 +127,14 @@ class Receivable
     public function getMethod()
     {
         return $this->method;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMethodFriendly()
+    {
+        return Lookup::friendlyPaymentMethodDescription($this->method);
     }
 
     /**

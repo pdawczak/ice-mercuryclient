@@ -45,5 +45,12 @@
                 public="true"
                 >
         </service>
+
+        <service
+                id="mercury.lookup"
+                class="Ice\MercuryClientBundle\Util\Lookup"
+                public="true"
+                >
+        </service>
     </services>
 </container>
