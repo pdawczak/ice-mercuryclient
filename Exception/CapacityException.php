@@ -17,6 +17,15 @@ class CapacityException extends \Exception
     /** @var  CourseBookingItem */
     private $courseItem;
 
+    public function __toString()
+    {
+        return sprintf(
+            "A place for item \"%s\" on booking \"%s\" cannot be allocated because there is no spare capacity.",
+            $this->getBookingItem()->getDescription(),
+            $this->getBooking()->getSuborderGroup()
+        );
+    }
+
     /**
      * @param \Ice\MinervaClientBundle\Entity\Booking $booking
      * @return CapacityException

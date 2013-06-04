@@ -192,7 +192,7 @@ class OrderBuilder
             })->first();
 
             if (!$matchingCourseItem) {
-                throw new \RuntimeException("Could not find a Course BookingItem that matches the Booking BookingItem.");
+                throw new \RuntimeException(sprintf("There is no valid course booking item that has the code \"%s\". The booking will need to be manually modified in the database before it can be paid for.", $item->getCode()));
             }
 
             //Check that all items have capacity available
