@@ -197,7 +197,7 @@ class OrderBuilder
 
             //Check that all items have capacity available
             if (!$booking->isAllocated()) {
-                if ($matchingCourseItem->isInStock()) {
+                if (!$matchingCourseItem->isInStock()) {
                     $e = (new CapacityException())
                         ->setBooking($booking)
                         ->setBookingItem($item)
