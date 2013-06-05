@@ -6,7 +6,7 @@ use Ice\MercuryClientBundle\Entity\AbstractPaymentPlan;
 use Ice\MercuryClientBundle\Entity\Receivable;
 use Ice\MercuryClientBundle\Entity\PaymentPlanInterface;
 
-class CertificateAndDiplomaThreeInstalments extends AbstractPaymentPlan implements PaymentPlanInterface
+class CertificateAndDiplomaThreeInstalments1314 extends AbstractPaymentPlan implements PaymentPlanInterface
 {
     /**
      * {@inheritDoc}
@@ -21,12 +21,12 @@ class CertificateAndDiplomaThreeInstalments extends AbstractPaymentPlan implemen
         $instalment2 = new Receivable();
         $instalment2
             ->setAmount($total * 0.33) // 33%
-            ->setDueDate(new \DateTime('2013-02-01')); // 1 February 2013
+            ->setDueDate(new \DateTime('2013-11-01')); // 1 Nov 2013
 
         $instalment3 = new Receivable();
         $instalment3
             ->setAmount($total * 0.33) // 33%
-            ->setDueDate(new \DateTime('2013-04-01')); // 1 April 2013
+            ->setDueDate(new \DateTime('2014-02-01')); // 1 Feb 2014
 
         /** @var Receivable[] $receivables */
         $receivables =  array(
@@ -57,6 +57,6 @@ class CertificateAndDiplomaThreeInstalments extends AbstractPaymentPlan implemen
      */
     public function getLongDescription()
     {
-        return 'Three equal instalments now, in February and in April';
+        return 'Three equal instalments now, in November and in February';
     }
 }
