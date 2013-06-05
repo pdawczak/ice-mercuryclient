@@ -81,6 +81,11 @@ class OrderBuilderTest extends \PHPUnit_Framework_TestCase
             ->method('getFinanceCode')
             ->will($this->returnValue($financeCode));
 
+        $veritasBookingItem
+            ->expects($this->any())
+            ->method('isInStock')
+            ->will($this->returnValue(true));
+
         return $veritasBookingItem;
     }
 
@@ -99,7 +104,7 @@ class OrderBuilderTest extends \PHPUnit_Framework_TestCase
 
         $veritasCourse = $this->getMock('Ice\\VeritasClientBundle\\Entity\\Course');
         $veritasCourse
-            ->expects($this->once())
+            ->expects($this->any())
             ->method('getBookingItems')
             ->will($this->returnValue(new ArrayCollection($veritasBookingItems)));
 
@@ -135,7 +140,7 @@ class OrderBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $minervaBooking = $this->getMock('Ice\\MinervaClientBundle\\Entity\\Booking');
         $minervaBooking
-            ->expects($this->once())
+            ->expects($this->any())
             ->method('getBookingItems')
             ->will($this->returnValue($minervaBookingItems));
 

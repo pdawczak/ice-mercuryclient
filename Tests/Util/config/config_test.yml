@@ -9,3 +9,5 @@ jms_serializer:
 #IceMercuryClient configuration
 ice_mercury_client:
     base_url: https://mercury.dev.ice.internal.admin.cam.ac.uk/app_test.php/api/
+    username: 'mercury'
+    password: 'testpassword'

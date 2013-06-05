@@ -35,13 +35,14 @@ class MercuryClientTest extends WebTestCase
     /**
      * @param $code
      * @param $financeCode
+     * @param bool $inStock
      * @return \Ice\VeritasClientBundle\Entity\BookingItem|MockObject
      */
-    private function getMockCourseBookingItem($code, $financeCode)
+    private function getMockCourseBookingItem($code, $financeCode, $inStock = true)
     {
         /** @var \Ice\VeritasClientBundle\Entity\BookingItem | MockObject $bookingItem */
         $bookingItem = $this->getMock('Ice\VeritasClientBundle\Entity\BookingItem',
-            array('getCode', 'getFinanceCode')
+            array('getCode', 'getFinanceCode', 'isInStock')
         );
 
         $bookingItem->expects($this->any())
@@ -51,6 +52,10 @@ class MercuryClientTest extends WebTestCase
         $bookingItem->expects($this->any())
             ->method('getFinanceCode')
             ->will($this->returnValue($financeCode));
+
+        $bookingItem->expects($this->any())
+            ->method('isInStock')
+            ->will($this->returnValue($inStock));
 
         return $bookingItem;
     }
