@@ -28,6 +28,10 @@
             "uri" : "orders",
             "responseClass": "ArrayCollection<Ice\\MercuryClientBundle\\Entity\\Order>",
             "parameters": {
+                "customer": {
+                    "location": "uri",
+                    "required": false
+                }
             }
         },
         "GetTransactionRequest": {

@@ -85,6 +85,15 @@ class MercuryClient
     }
 
     /**
+     * @param string $iceId
+     * @return \Ice\MercuryClientBundle\Entity\Order[]|ArrayCollection
+     */
+    public function findOrdersByCustomer($iceId)
+    {
+        return $this->getRestClient()->getCommand('GetOrders', array('customer'=>$iceId))->execute();
+    }
+
+    /**
      * @return OrderBuilder
      */
     public function getNewOrderBuilder()
