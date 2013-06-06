@@ -29,7 +29,7 @@
             "responseClass": "ArrayCollection<Ice\\MercuryClientBundle\\Entity\\Order>",
             "parameters": {
                 "customer": {
-                    "location": "uri",
+                    "location": "query",
                     "required": false
                 }
             }
