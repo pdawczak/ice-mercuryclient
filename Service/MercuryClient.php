@@ -23,6 +23,11 @@ class MercuryClient
     private $restClient;
 
     /**
+     * @var PaymentPagesService
+     */
+    private $paymentPagesService;
+
+    /**
      * @param \Ice\MercuryClientBundle\Service\MercuryRestClient $restClient
      * @return MercuryClient
      */
@@ -192,5 +197,23 @@ class MercuryClient
     public function findSuborderGroupById($id)
     {
         return $this->getRestClient()->getCommand('GetSuborderGroup', array('id' => $id))->execute();
+    }
+
+    /**
+     * @param \Ice\MercuryClientBundle\Service\PaymentPagesService $paymentPagesService
+     * @return MercuryClient
+     */
+    public function setPaymentPagesService($paymentPagesService)
+    {
+        $this->paymentPagesService = $paymentPagesService;
+        return $this;
+    }
+
+    /**
+     * @return \Ice\MercuryClientBundle\Service\PaymentPagesService
+     */
+    public function getPaymentPagesService()
+    {
+        return $this->paymentPagesService;
     }
 }

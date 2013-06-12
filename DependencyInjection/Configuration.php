@@ -35,6 +35,9 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('password')
                     ->info('Password to authenticate against the API.')
                 ->end()
+                ->scalarNode('gateway_secret')
+                    ->info('Password used to sign requests to the payment gateway.')
+                ->end()
             ->end();
 
         return $treeBuilder;

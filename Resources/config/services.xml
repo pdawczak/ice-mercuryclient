@@ -30,14 +30,7 @@
             </call>
         </service>
 
-        <service
-                id="mercury.client"
-                class="Ice\MercuryClientBundle\Service\MercuryClient"
-                public="true">
-            <call method="setRestClient">
-                <argument type="service" id="mercury_rest_client"/>
-            </call>
-        </service>
+
 
         <service
                 id="mercury.payment_plans"
@@ -51,6 +44,28 @@
                 class="Ice\MercuryClientBundle\Util\Lookup"
                 public="true"
                 >
+        </service>
+
+        <service
+                id="mercury.payment_pages"
+                class="Ice\MercuryClientBundle\Service\PaymentPagesService"
+                public="true"
+                >
+            <call method="setGatewaySecret">
+                <argument type="string">%ice_mercury_client.gateway_secret%</argument>
+            </call>
+        </service>
+
+        <service
+                id="mercury.client"
+                class="Ice\MercuryClientBundle\Service\MercuryClient"
+                public="true">
+            <call method="setRestClient">
+                <argument type="service" id="mercury_rest_client"/>
+            </call>
+            <call method="setPaymentPagesService">
+                <argument type="service" id="mercury.payment_pages"/>
+            </call>
         </service>
     </services>
 </container>
