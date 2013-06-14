@@ -26,6 +26,9 @@ class IceMercuryClientExtension extends Extension
         $container->setParameter('ice_mercury_client.username', $config['username']);
         $container->setParameter('ice_mercury_client.password', $config['password']);
         $container->setParameter('ice_mercury_client.gateway_secret', $config['gateway_secret']);
+        $container->setParameter('ice_mercury_client.gateway_account', $config['gateway_account']);
+        $container->setParameter('ice_mercury_client.gateway_method', $config['gateway_method']);
+        $container->setParameter('ice_mercury_client.gateway_root_url', $config['gateway_root_url']);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');

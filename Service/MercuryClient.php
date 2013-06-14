@@ -28,6 +28,29 @@ class MercuryClient
     private $paymentPagesService;
 
     /**
+     * @var string
+     */
+    private $gatewayMethod;
+
+    /**
+     * @param string $gatewayMethod
+     * @return MercuryClient
+     */
+    public function setGatewayMethod($gatewayMethod)
+    {
+        $this->gatewayMethod = $gatewayMethod;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGatewayMethod()
+    {
+        return $this->gatewayMethod;
+    }
+
+    /**
      * @param \Ice\MercuryClientBundle\Service\MercuryRestClient $restClient
      * @return MercuryClient
      */
@@ -174,6 +197,7 @@ class MercuryClient
         }
         $request->setComponents($components);
         $request->setIceId($order->getIceId());
+        $request->setRequestAccountTypeDescription($this->getGatewayMethod());
 
         if ($request->getTotalRequestAmount() === 0) {
             return $request;

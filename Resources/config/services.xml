@@ -7,6 +7,7 @@
     <parameters>
         <parameter key="guzzle.client.class">Guzzle\Service\Client</parameter>
         <parameter key="guzzle.service_description.class">Guzzle\Service\Description\ServiceDescription</parameter>
+        <parameter key="guzzle.service_description.class">Guzzle\Service\Description\ServiceDescription</parameter>
     </parameters>
 
     <services>
@@ -54,6 +55,12 @@
             <call method="setGatewaySecret">
                 <argument type="string">%ice_mercury_client.gateway_secret%</argument>
             </call>
+            <call method="setSiteReference">
+                <argument type="string">%ice_mercury_client.gateway_account%</argument>
+            </call>
+            <call method="setIframeRootUrl">
+                <argument type="string">%ice_mercury_client.gateway_root_url%</argument>
+            </call>
         </service>
 
         <service
@@ -65,6 +72,9 @@
             </call>
             <call method="setPaymentPagesService">
                 <argument type="service" id="mercury.payment_pages"/>
+            </call>
+            <call method="setGatewayMethod">
+                <argument type="string">%ice_mercury_client.gateway_method%</argument>
             </call>
         </service>
     </services>

@@ -18,6 +18,36 @@ class PaymentPagesService
     private $gatewaySecret;
 
     /**
+     * @var string
+     */
+    private $iframeRootUrl;
+
+    /**
+     * @var string
+     *
+     * Default to test account, but this should be overwritten by the service container.
+     */
+    private $siteReference = 'test_uniofcam45561';
+
+    /**
+     * @param string $iframeRootUrl
+     * @return PaymentPagesService
+     */
+    public function setIframeRootUrl($iframeRootUrl)
+    {
+        $this->iframeRootUrl = $iframeRootUrl;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIframeRootUrl()
+    {
+        return $this->iframeRootUrl;
+    }
+
+    /**
      * @param string $gatewaySecret
      * @return PaymentPagesService
      */
@@ -36,6 +66,24 @@ class PaymentPagesService
     }
 
     /**
+     * @param string $siteReference
+     * @return PaymentPagesService
+     */
+    public function setSiteReference($siteReference)
+    {
+        $this->siteReference = $siteReference;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSiteReference()
+    {
+        return $this->siteReference;
+    }
+
+    /**
      * Gets the absolute URL of the iframe to display in order to take payment for the given transaction request
      *
      * @param TransactionRequest $transactionRequest
@@ -44,7 +92,6 @@ class PaymentPagesService
      */
     public function getIframeUrl(TransactionRequest $transactionRequest, $customer = null)
     {
-        $root = "https://payments.securetrading.net/process/payments/choice";
 
         if ($customer instanceof CustomerInterface) {
             $extraParams = [
@@ -70,11 +117,11 @@ class PaymentPagesService
         $params = array(
             'childcss'=>'stpp-public',
             'childjs'=>'stpp-resize',
-            'sitereference'=>'test_uniofcam45561',
+            'sitereference'=>$this->getSiteReference(),
             'mainamount'=>$transactionRequest->getTotalRequestAmount() / 100,
             'currencyiso3a'=>'GBP',
             'version'=>1,
-            'accounttypedescription'=>'MOTO',
+            'accounttypedescription'=>$transactionRequest->getRequestAccountTypeDescription(),
             'orderreference'=>$transactionRequest->getReference()
         );
 
@@ -90,6 +137,6 @@ class PaymentPagesService
         $params['sitesecurity'] = 'g'.hash('sha256', $hashData);
 
         $queryString = http_build_query(array_merge($extraParams, $params));
-        return $root.'?'.$queryString;
+        return $this->getIframeRootUrl().'?'.$queryString;
     }
 }
