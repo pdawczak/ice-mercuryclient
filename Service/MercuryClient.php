@@ -14,6 +14,7 @@ use Ice\MercuryClientBundle\Entity\Receivable;
 use Ice\MercuryClientBundle\Entity\Transaction;
 use Ice\MercuryClientBundle\Entity\TransactionRequest;
 use Ice\MercuryClientBundle\Entity\TransactionRequestComponent;
+use Ice\MercuryClientBundle\Entity\TransactionReportLine;
 
 class MercuryClient
 {
@@ -239,5 +240,19 @@ class MercuryClient
     public function getPaymentPagesService()
     {
         return $this->paymentPagesService;
+    }
+
+
+    /**
+     * @param \DateTime $day
+     * @return ArrayCollection|TransactionReportLine[]
+     */
+    public function getTransactionReportByDay(\DateTime $day)
+    {
+        return $this->getRestClient()->getCommand('GetTransactionReportByDay', [
+            'year' => $day->format('Y'),
+            'month' => $day->format('m'),
+            'day' => $day->format('d')
+        ])->execute();
     }
 }
