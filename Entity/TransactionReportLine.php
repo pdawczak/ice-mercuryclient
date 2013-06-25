@@ -30,6 +30,11 @@ class TransactionReportLine
      */
     private $transactionReference;
 
+    /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $customerIceId;
 
     /**
      * @var string
@@ -61,6 +66,12 @@ class TransactionReportLine
      * @JMS\Type("string")
      */
     private $note;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $lineDescription;
 
     /**
      * @param int $amount
@@ -222,5 +233,41 @@ class TransactionReportLine
     public function getTransactionReference()
     {
         return $this->transactionReference;
+    }
+
+    /**
+     * @param string $customerIceId
+     * @return TransactionReportLine
+     */
+    public function setCustomerIceId($customerIceId)
+    {
+        $this->customerIceId = $customerIceId;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerIceId()
+    {
+        return $this->customerIceId;
+    }
+
+    /**
+     * @param string $lineDescription
+     * @return TransactionReportLine
+     */
+    public function setLineDescription($lineDescription)
+    {
+        $this->lineDescription = $lineDescription;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLineDescription()
+    {
+        return $this->lineDescription;
     }
 }
