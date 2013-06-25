@@ -20,7 +20,7 @@ class TransactionReportLine
 
     /**
      * @var \DateTime
-     * @JMS\Type("datetime")
+     * @JMS\Type("DateTime")
      */
     private $transactionDate;
 
