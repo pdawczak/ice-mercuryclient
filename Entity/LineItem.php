@@ -36,6 +36,12 @@ class LineItem{
     private $externalId;
 
     /**
+     * @var AllocationTarget[]
+     * @JMS\Type("array<Ice\MercuryClientBundle\Entity\AllocationTarget>")
+     */
+    private $allocationTargets = [];
+
+    /**
      * @return int
      */
     public function getAmount()
@@ -123,5 +129,33 @@ class LineItem{
     public function getExternalId()
     {
         return $this->externalId;
+    }
+
+    /**
+     * @param AllocationTarget $allocationTarget
+     * @return LineItem
+     */
+    public function addAllocationTarget(AllocationTarget $allocationTarget)
+    {
+        $this->allocationTargets[] = $allocationTarget;
+        return $this;
+    }
+
+    /**
+     * @param AllocationTarget[] $allocationTargets
+     * @return LineItem
+     */
+    public function setAllocationTargets($allocationTargets)
+    {
+        $this->allocationTargets = $allocationTargets;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAllocationTargets()
+    {
+        return $this->allocationTargets;
     }
 }

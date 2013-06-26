@@ -2,6 +2,7 @@
 namespace Ice\MercuryClientBundle\Builder;
 
 use Ice\JanusClientBundle\Entity\User;
+use Ice\MercuryClientBundle\Entity\AllocationTarget;
 use Ice\MercuryClientBundle\Entity\CustomerInterface;
 use Ice\MercuryClientBundle\Entity\LineItem;
 use Ice\MercuryClientBundle\Entity\Order;
@@ -208,12 +209,36 @@ class OrderBuilder
 
             $financeCode = $matchingCourseItem->getFinanceCode();
 
+            $allocationTargets = [];
+
+            if ($item->getCategory()->isDiscount()) {
+                foreach($booking->getBookingItems() as $innerItem) {
+                    if ($innerItem->getCategory()->isTuition()) {
+
+                        /** @var BookingItem $innerMatchingCourseItem */
+                        $innerMatchingCourseItem = $course->getBookingItems()->filter(function (BookingItem $courseItem) use ($innerItem) {
+                            return $courseItem->getCode() === $innerItem->getCode();
+                        })->first();
+
+                        $allocationTargets[] = (new AllocationTarget())
+                            ->setFinanceCode($innerMatchingCourseItem->getFinanceCode())
+                            ->setStrategy(AllocationTarget::STRATEGY_NEXT_PAYMENT)
+                            ->setWeight(1)
+                        ;
+
+                        break;
+                    }
+                }
+
+            }
+
             $suborder->addLineItem(
                 (new LineItem())
                     ->setDescription($item->getDescription())
                     ->setAmount($item->getPrice())
                     ->setExternalId($item->getCode())
                     ->setCostCentre($financeCode) // Finance code is what is needed. Cost centre will be renamed to finance code in Mercury.
+                    ->setAllocationTargets($allocationTargets)
             );
         }
         $this->order->addSuborder($suborder);

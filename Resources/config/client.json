@@ -56,6 +56,25 @@
                 }
             }
         },
+        "GetTransactionReportByDay": {
+            "httpMethod": "GET",
+            "uri" : "reports/transactions/byday/{year}-{month}-{day}",
+            "responseClass": "ArrayCollection<Ice\\MercuryClientBundle\\Entity\\TransactionReportLine>",
+            "parameters": {
+                "year":{
+                    "location": "uri",
+                    "required": true
+                },
+                "month":{
+                    "location": "uri",
+                    "required": true
+                },
+                "day":{
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
         "GetSuborderGroup": {
             "httpMethod": "GET",
             "uri" : "subordergroup/{id}",
