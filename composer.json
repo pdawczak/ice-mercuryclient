@@ -26,7 +26,7 @@
     "require": {
         "misd/guzzle-bundle": "@stable",
         "ice/veritasclient-bundle": ">=0.2.2",
-        "ice/minervaclient-bundle": ">=0.1.8",
+        "ice/minervaclient-bundle": ">=1.1.0",
         "ice/janusclient-bundle": ">=0.2",
         "jms/serializer-bundle": ">=0.12.0@dev"
     },
