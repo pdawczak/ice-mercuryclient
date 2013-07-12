@@ -32,6 +32,12 @@ class PaymentGroup
     private $attributes;
 
     /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $externalId;
+
+    /**
      * Initialise ArrayCollections
      */
     public function __construct()
@@ -146,5 +152,23 @@ class PaymentGroup
     public function getAttributes()
     {
         return $this->attributes;
+    }
+
+    /**
+     * @param string $externalId
+     * @return PaymentGroup
+     */
+    public function setExternalId($externalId)
+    {
+        $this->externalId = $externalId;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExternalId()
+    {
+        return $this->externalId;
     }
 }
