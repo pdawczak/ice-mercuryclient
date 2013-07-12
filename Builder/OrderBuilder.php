@@ -167,6 +167,8 @@ class OrderBuilder
             ->setAttributeByNameAndValue('delegate_ice_id', $booking->getAcademicInformation()->getIceId())
             ->setAttributeByNameAndValue('course_id', $booking->getAcademicInformation()->getCourseId());
 
+        $paymentGroup->setExternalId($booking->getSuborderGroup());
+
         if ($delegate) {
             $paymentGroup
                 ->setAttributeByNameAndValue('delegate_first_names', $delegate->getFirstNames())
