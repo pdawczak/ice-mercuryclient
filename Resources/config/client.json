@@ -75,9 +75,20 @@
                 }
             }
         },
-        "GetSuborderGroup": {
+        "GetPaymentGroup": {
             "httpMethod": "GET",
-            "uri" : "subordergroup/{id}",
+            "uri" : "paymentgroup/{id}",
+            "responseClass": "Ice\\MercuryClientBundle\\Entity\\PaymentGroup",
+            "parameters": {
+                "id":{
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "GetPaymentGroupByExternalId": {
+            "httpMethod": "GET",
+            "uri" : "paymentgroup/by/externalid/{externalId}",
             "responseClass": "Ice\\MercuryClientBundle\\Entity\\PaymentGroup",
             "parameters": {
                 "id":{
