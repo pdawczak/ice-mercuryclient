@@ -15,6 +15,7 @@ use Ice\MercuryClientBundle\Entity\Transaction;
 use Ice\MercuryClientBundle\Entity\TransactionRequest;
 use Ice\MercuryClientBundle\Entity\TransactionRequestComponent;
 use Ice\MercuryClientBundle\Entity\TransactionReportLine;
+use Ice\MercuryClientBundle\Entity\PaymentGroup;
 
 class MercuryClient
 {
@@ -214,16 +215,6 @@ class MercuryClient
         }
     }
 
-
-    /**
-     * @param int $id
-     * @return \Ice\MercuryClientBundle\Entity\PaymentGroup
-     */
-    public function findSuborderGroupById($id)
-    {
-        return $this->getRestClient()->getCommand('GetSuborderGroup', array('id' => $id))->execute();
-    }
-
     /**
      * @param \Ice\MercuryClientBundle\Service\PaymentPagesService $paymentPagesService
      * @return MercuryClient
@@ -253,6 +244,32 @@ class MercuryClient
             'year' => $day->format('Y'),
             'month' => $day->format('m'),
             'day' => $day->format('d')
+        ])->execute();
+    }
+
+    /**
+     * Get a payment group by ID
+     *
+     * @param $id
+     * @return PaymentGroup
+     */
+    public function getPaymentGroup($id)
+    {
+        return $this->getRestClient()->getCommand('getPaymentGroup', [
+            'id' =>$id
+        ])->execute();
+    }
+
+    /**
+     * Get a payment group by ID
+     *
+     * @param $externalId
+     * @return PaymentGroup
+     */
+    public function getPaymentGroupByExternalId($externalId)
+    {
+        return $this->getRestClient()->getCommand('getPaymentGroupByExternalId', [
+            'externalId' =>$externalId
         ])->execute();
     }
 }
