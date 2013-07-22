@@ -34,6 +34,12 @@ class Transaction
     private $method;
 
     /**
+     * @var \DateTime $created
+     * @JMS\Type("DateTime")
+     */
+    private $created;
+
+    /**
      * @var TransactionRequest
      * @JMS\Type("Ice\MercuryClientBundle\Entity\TransactionRequest")
      */
@@ -127,5 +133,23 @@ class Transaction
     public function getTransactionRequest()
     {
         return $this->transactionRequest;
+    }
+
+    /**
+     * @param \DateTime $created
+     * @return Transaction
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
     }
 }

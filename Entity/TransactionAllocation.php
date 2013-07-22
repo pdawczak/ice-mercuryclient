@@ -20,6 +20,12 @@ class TransactionAllocation{
     private $amount;
 
     /**
+     * @var Transaction
+     * @JMS\Type("Ice\MercuryClientBundle\Entity\Transaction")
+     */
+    private $transaction;
+
+    /**
      * @return int
      */
     public function getAmount()
@@ -33,5 +39,13 @@ class TransactionAllocation{
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return \Ice\MercuryClientBundle\Entity\Transaction
+     */
+    public function getTransaction()
+    {
+        return $this->transaction;
     }
 }
