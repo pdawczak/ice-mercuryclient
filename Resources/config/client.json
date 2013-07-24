@@ -91,7 +91,7 @@
             "uri" : "paymentgroup/by/externalid/{externalId}",
             "responseClass": "Ice\\MercuryClientBundle\\Entity\\PaymentGroup",
             "parameters": {
-                "id":{
+                "externalid":{
                     "location": "uri",
                     "required": true
                 }
