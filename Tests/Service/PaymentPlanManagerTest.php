@@ -23,6 +23,9 @@ class PaymentPlanManagerTest extends \PHPUnit_Framework_TestCase
 
         $plan = $manager->getPaymentPlan('TwoYearSixInstalments', '1315November');
         $this->assertInstanceOf('Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1315November', $plan);
+
+        $plan = $manager->getPaymentPlan('TwoYearSixInstalments', '1315October');
+        $this->assertInstanceOf('Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1315November', $plan);
     }
 
     /**
