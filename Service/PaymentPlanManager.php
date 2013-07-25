@@ -4,11 +4,9 @@ namespace Ice\MercuryClientBundle\Service;
 
 use Ice\MercuryClientBundle\Exception\InvalidPaymentPlanException;
 use Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1315February;
-use Ice\MercuryClientBundle\PaymentPlan\AdvancedDiplomaSixInstalments1315November;
-use Ice\MercuryClientBundle\PaymentPlan\CertificateAndDiplomaThreeInstalments;
 use Ice\MercuryClientBundle\PaymentPlan\OneYearThreeInstalments1314;
 use Ice\MercuryClientBundle\PaymentPlan\FullAmountNow;
-use Ice\MercuryClientBundle\PaymentPlan\PaymentPlanInterface;
+use Ice\MercuryClientBundle\Entity\PaymentPlanInterface;
 use Ice\MercuryClientBundle\PaymentPlan\ResidentialRegistrationFee;
 use Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1315November;
 
