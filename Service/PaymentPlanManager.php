@@ -10,6 +10,7 @@ use Ice\MercuryClientBundle\PaymentPlan\CertificateAndDiplomaThreeInstalments131
 use Ice\MercuryClientBundle\PaymentPlan\FullAmountNow;
 use Ice\MercuryClientBundle\PaymentPlan\PaymentPlanInterface;
 use Ice\MercuryClientBundle\PaymentPlan\ResidentialRegistrationFee;
+use Ice\MercuryClientBundle\PaymentPlan\TwoYearCertificateSixInstalments1315November;
 
 class PaymentPlanManager
 {
@@ -29,6 +30,7 @@ class PaymentPlanManager
         $mapper = array(
             'AdvancedDiplomaSixInstalmentsV1315November' => new AdvancedDiplomaSixInstalments1315November(),
             'AdvancedDiplomaSixInstalmentsV1315February' => new AdvancedDiplomaSixInstalments1315February(),
+            'TwoYearCertificateSixInstalmentsV1315November' => new TwoYearCertificateSixInstalments1315November(),
             'CertificateAndDiplomaThreeInstalmentsV1314' => new CertificateAndDiplomaThreeInstalments1314(),
             'FullAmountNowV1' => new FullAmountNow(),
             'ResidentialRegistrationFeeV1' => new ResidentialRegistrationFee(),
