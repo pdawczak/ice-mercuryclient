@@ -6,7 +6,7 @@ use Ice\MercuryClientBundle\Entity\AbstractPaymentPlan;
 use Ice\MercuryClientBundle\Entity\Receivable;
 use Ice\MercuryClientBundle\Entity\PaymentPlanInterface;
 
-class TwoYearCertificate1315November extends AbstractPaymentPlan implements PaymentPlanInterface
+class TwoYearCertificateSixInstalments1315November extends AbstractPaymentPlan implements PaymentPlanInterface
 {
     /**
      * {@inheritDoc}
