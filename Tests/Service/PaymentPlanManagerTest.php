@@ -13,7 +13,19 @@ class PaymentPlanManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Ice\MercuryClientBundle\PaymentPlan\ResidentialRegistrationFee', $plan);
 
         $plan = $manager->getPaymentPlan('AdvancedDiplomaSixInstalments', '1315November');
-        $this->assertInstanceOf('Ice\MercuryClientBundle\PaymentPlan\AdvancedDiplomaSixInstalments1315November', $plan);
+        $this->assertInstanceOf('Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1315November', $plan);
+
+        $plan = $manager->getPaymentPlan('AdvancedDiplomaSixInstalments', '1315February');
+        $this->assertInstanceOf('Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1315February', $plan);
+
+        $plan = $manager->getPaymentPlan('TwoYearSixInstalments', '1315February');
+        $this->assertInstanceOf('Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1315February', $plan);
+
+        $plan = $manager->getPaymentPlan('TwoYearSixInstalments', '1315November');
+        $this->assertInstanceOf('Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1315November', $plan);
+
+        $plan = $manager->getPaymentPlan('TwoYearSixInstalments', '1315October');
+        $this->assertInstanceOf('Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1315November', $plan);
     }
 
     /**

@@ -3,7 +3,7 @@
 namespace Ice\MercuryClientBundle\Tests\PaymentPlan;
 
 use Ice\MercuryClientBundle\Entity\Receivable;
-use Ice\MercuryClientBundle\PaymentPlan\CertificateAndDiplomaThreeInstalments1314;
+use Ice\MercuryClientBundle\PaymentPlan\OneYearThreeInstalments1314;
 
 class CertificateAndDiplomaThreeInstalmentsTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,7 +12,7 @@ class CertificateAndDiplomaThreeInstalmentsTest extends \PHPUnit_Framework_TestC
         $instalmentTwoDate = new \DateTime('2013-11-01');
         $instalmentThreeDate = new \DateTime('2014-02-01');
 
-        $plan = new CertificateAndDiplomaThreeInstalments1314();
+        $plan = new OneYearThreeInstalments1314();
         /** @var $receivables Receivable[] */
         $receivables = $plan->getReceivables(new \DateTime(), 1000);
 
@@ -33,7 +33,7 @@ class CertificateAndDiplomaThreeInstalmentsTest extends \PHPUnit_Framework_TestC
 
     public function testCorrectReceivablesCreatedForCertificateWithBursary()
     {
-        $plan = new CertificateAndDiplomaThreeInstalments1314();
+        $plan = new OneYearThreeInstalments1314();
         /** @var $receivables Receivable[] */
         $receivables = $plan->getReceivables(new \DateTime(), 130000);
 
@@ -49,7 +49,7 @@ class CertificateAndDiplomaThreeInstalmentsTest extends \PHPUnit_Framework_TestC
 
     public function testCorrectReceivablesCreatedForDiploma()
     {
-        $plan = new CertificateAndDiplomaThreeInstalments1314();
+        $plan = new OneYearThreeInstalments1314();
         /** @var $receivables Receivable[] */
         $receivables = $plan->getReceivables(new \DateTime(), 150000);
 

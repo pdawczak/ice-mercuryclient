@@ -6,9 +6,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Ice\MercuryClientBundle\Builder\OrderBuilder;
 use Ice\MercuryClientBundle\Entity\LineItem;
 use Ice\MercuryClientBundle\Entity\Suborder;
-use Ice\MercuryClientBundle\PaymentPlan\AdvancedDiplomaSixInstalments1315February;
+use Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1315February;
 use Ice\MinervaClientBundle\Entity\Booking;
 use Ice\MinervaClientBundle\Entity\BookingItem as MinervaBookingItem;
+use Ice\MinervaClientBundle\Entity\Category;
 use Ice\VeritasClientBundle\Entity\BookingItem as VeritasBookingItem;
 use Ice\VeritasClientBundle\Entity\Course;
 use Ice\JanusClientBundle\Entity\User;
@@ -32,7 +33,7 @@ class OrderBuilderTest extends \PHPUnit_Framework_TestCase
 
         $order = $builder->addNewBooking(
             $minervaBooking,
-            new AdvancedDiplomaSixInstalments1315February(),
+            new TwoYearSixInstalments1315February(),
             $veritasCourse,
             $janusUser
         );
@@ -59,7 +60,7 @@ class OrderBuilderTest extends \PHPUnit_Framework_TestCase
         $minervaBooking = $this->getMockMinervaBooking(array($minervaBookingItem), $academicInformation);
 
         $builder = new OrderBuilder();
-        $builder->addNewBooking($minervaBooking, new AdvancedDiplomaSixInstalments1315February(), $veritasCourse);
+        $builder->addNewBooking($minervaBooking, new TwoYearSixInstalments1315February(), $veritasCourse);
     }
 
     /**
@@ -123,12 +124,39 @@ class OrderBuilderTest extends \PHPUnit_Framework_TestCase
      */
     protected function getMockMinervaBookingItem($itemCode)
     {
+        if (strpos($itemCode, 'BURSARY') !== false) {
+             $categoryCode = Category::DISCOUNT_CATEGORY;
+        }
+        else if(strpos($itemCode, 'TUITION') !== false) {
+            $categoryCode = Category::TUITION_CATEGORY;
+        }
+        else if(strpos($itemCode, 'BANDB') !== false) {
+            $categoryCode = Category::ADDITIONAL_ACCOMMODATION_CATEGORY;
+        }
+        else if(strpos($itemCode, 'ACCOMMODATION') !== false) {
+            $categoryCode = Category::COURSE_ACCOMMODATION_CATEGORY;
+        }
+        else if(strpos($itemCode, 'PLATTER') !== false) {
+            $categoryCode = Category::EVENING_PLATTER_CATEGORY;
+        }
+        else {
+            $categoryCode = Category::MISCELLANEOUS_CATEGORY;
+        }
         $minervaBookingItem = $this->getMock('Ice\\MinervaClientBundle\\Entity\\BookingItem');
         $minervaBookingItem
             ->expects($this->any())
             ->method('getCode')
             ->will($this->returnValue($itemCode));
+        $minervaBookingItem
+            ->expects($this->any())
+            ->method('getCategory')
+            ->will($this->returnValue($this->getMockMinervaCategory($categoryCode)));
         return $minervaBookingItem;
+    }
+
+    public function getMockMinervaCategory($code)
+    {
+        return (new Category())->setId($code);
     }
 
     /**
