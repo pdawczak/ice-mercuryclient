@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Ice\MercuryClientBundle\Builder\OrderBuilder;
 use Ice\MercuryClientBundle\Entity\LineItem;
 use Ice\MercuryClientBundle\Entity\Suborder;
-use Ice\MercuryClientBundle\PaymentPlan\AdvancedDiplomaSixInstalments1315February;
+use Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1315February;
 use Ice\MinervaClientBundle\Entity\Booking;
 use Ice\MinervaClientBundle\Entity\BookingItem as MinervaBookingItem;
 use Ice\VeritasClientBundle\Entity\BookingItem as VeritasBookingItem;
@@ -32,7 +32,7 @@ class OrderBuilderTest extends \PHPUnit_Framework_TestCase
 
         $order = $builder->addNewBooking(
             $minervaBooking,
-            new AdvancedDiplomaSixInstalments1315February(),
+            new TwoYearSixInstalments1315February(),
             $veritasCourse,
             $janusUser
         );
@@ -59,7 +59,7 @@ class OrderBuilderTest extends \PHPUnit_Framework_TestCase
         $minervaBooking = $this->getMockMinervaBooking(array($minervaBookingItem), $academicInformation);
 
         $builder = new OrderBuilder();
-        $builder->addNewBooking($minervaBooking, new AdvancedDiplomaSixInstalments1315February(), $veritasCourse);
+        $builder->addNewBooking($minervaBooking, new TwoYearSixInstalments1315February(), $veritasCourse);
     }
 
     /**

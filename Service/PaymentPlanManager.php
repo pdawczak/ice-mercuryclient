@@ -3,14 +3,14 @@
 namespace Ice\MercuryClientBundle\Service;
 
 use Ice\MercuryClientBundle\Exception\InvalidPaymentPlanException;
-use Ice\MercuryClientBundle\PaymentPlan\AdvancedDiplomaSixInstalments1315February;
+use Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1315February;
 use Ice\MercuryClientBundle\PaymentPlan\AdvancedDiplomaSixInstalments1315November;
 use Ice\MercuryClientBundle\PaymentPlan\CertificateAndDiplomaThreeInstalments;
-use Ice\MercuryClientBundle\PaymentPlan\CertificateAndDiplomaThreeInstalments1314;
+use Ice\MercuryClientBundle\PaymentPlan\OneYearThreeInstalments1314;
 use Ice\MercuryClientBundle\PaymentPlan\FullAmountNow;
 use Ice\MercuryClientBundle\PaymentPlan\PaymentPlanInterface;
 use Ice\MercuryClientBundle\PaymentPlan\ResidentialRegistrationFee;
-use Ice\MercuryClientBundle\PaymentPlan\TwoYearCertificateSixInstalments1315November;
+use Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1315November;
 
 class PaymentPlanManager
 {
@@ -28,10 +28,12 @@ class PaymentPlanManager
         $paymentPlanName = sprintf("%sV%s", $paymentPlanCode, $version);
 
         $mapper = array(
-            'AdvancedDiplomaSixInstalmentsV1315November' => new AdvancedDiplomaSixInstalments1315November(),
-            'AdvancedDiplomaSixInstalmentsV1315February' => new AdvancedDiplomaSixInstalments1315February(),
-            'TwoYearCertificateSixInstalmentsV1315November' => new TwoYearCertificateSixInstalments1315November(),
-            'CertificateAndDiplomaThreeInstalmentsV1314' => new CertificateAndDiplomaThreeInstalments1314(),
+            'AdvancedDiplomaSixInstalmentsV1315November' => new TwoYearSixInstalments1315November(),
+            'AdvancedDiplomaSixInstalmentsV1315February' => new TwoYearSixInstalments1315February(),
+            'TwoYearSixInstalmentsV1315February' => new TwoYearSixInstalments1315November(),
+            'TwoYearSixInstalmentsV1315November' => new TwoYearSixInstalments1315November(),
+            'CertificateAndDiplomaThreeInstalmentsV1314' => new OneYearThreeInstalments1314(),
+            'OneYearThreeInstalmentsV1314' => new OneYearThreeInstalments1314(),
             'FullAmountNowV1' => new FullAmountNow(),
             'ResidentialRegistrationFeeV1' => new ResidentialRegistrationFee(),
         );
