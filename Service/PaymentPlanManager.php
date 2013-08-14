@@ -9,6 +9,7 @@ use Ice\MercuryClientBundle\PaymentPlan\FullAmountNow;
 use Ice\MercuryClientBundle\Entity\PaymentPlanInterface;
 use Ice\MercuryClientBundle\PaymentPlan\ResidentialRegistrationFee;
 use Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1315November;
+use Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1315January;
 
 class PaymentPlanManager
 {
@@ -28,6 +29,7 @@ class PaymentPlanManager
         $mapper = array(
             'AdvancedDiplomaSixInstalmentsV1315November' => new TwoYearSixInstalments1315November(),
             'AdvancedDiplomaSixInstalmentsV1315February' => new TwoYearSixInstalments1315February(),
+            'AdvancedDiplomaSixInstalmentsV1315January' => new TwoYearSixInstalments1315January(),
             'TwoYearSixInstalmentsV1315February' => new TwoYearSixInstalments1315February(),
             'TwoYearSixInstalmentsV1315October' => new TwoYearSixInstalments1315November(),
             'TwoYearSixInstalmentsV1315November' => new TwoYearSixInstalments1315November(),
