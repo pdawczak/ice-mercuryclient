@@ -10,6 +10,7 @@ use Ice\MinervaClientBundle\Entity\AcademicInformation;
 use Ice\MinervaClientBundle\Entity\Booking;
 use Ice\MercuryClientBundle\Service\PaymentPlanService;
 use Ice\MinervaClientBundle\Entity\BookingItem;
+use Ice\MinervaClientBundle\Entity\Category;
 use Ice\VeritasClientBundle\Entity\Course;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 
@@ -98,6 +99,9 @@ class MercuryClientTest extends WebTestCase
         return $course;
     }
 
+    /**
+     * @group internet
+     */
     public function testValidWebOrderProcess()
     {
         /** @var $client MercuryClient */
@@ -122,10 +126,13 @@ class MercuryClientTest extends WebTestCase
                 ->setBookingItems(array(
                     $this->getMockBookingBookingItem('TESTCODE1')
                         ->setDescription('Some thing')
-                        ->setPrice(1000),
+                        ->setPrice(1000)
+                        ->setCategory((new Category())->setId(Category::TUITION_CATEGORY))
+                ,
                     $this->getMockBookingBookingItem('TESTCODE2')
                         ->setDescription('Some less expensive thing')
                         ->setPrice(500)
+                        ->setCategory((new Category())->setId(Category::TUITION_CATEGORY))
                 ))
             ,
             $planService->getPaymentPlan('FullAmountNow', '1'),
@@ -136,6 +143,7 @@ class MercuryClientTest extends WebTestCase
         $order->setIceId('test');
 
         $order->setCreated(new \DateTime('2013-01-01'));
+        $order->setIceId('rh1');
 
         $newOrder = $client->createOrder($order);
 

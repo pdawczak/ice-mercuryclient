@@ -4,8 +4,9 @@ namespace Ice\MercuryClientBundle\Tests\PaymentPlan;
 
 use Ice\MercuryClientBundle\Entity\Receivable;
 use Ice\MercuryClientBundle\PaymentPlan\AdvancedDiplomaSixInstalments1315November;
+use Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1315November;
 
-class AdvancedDiplomaSixInstalments1315NovemberTest extends \PHPUnit_Framework_TestCase
+class TwoYearSixInstalments1315NovemberTest extends \PHPUnit_Framework_TestCase
 {
     public function testCorrectReceivablesCreated()
     {
@@ -15,7 +16,7 @@ class AdvancedDiplomaSixInstalments1315NovemberTest extends \PHPUnit_Framework_T
         $instalmentFiveDate = new \DateTime('2014-11-01');
         $instalmentSixDate = new \DateTime('2015-02-01');
 
-        $plan = new AdvancedDiplomaSixInstalments1315November();
+        $plan = new TwoYearSixInstalments1315November();
         /** @var $receivables Receivable[] */
         $receivables = $plan->getReceivables(new \DateTime(), 220000);
 
