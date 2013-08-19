@@ -30,6 +30,7 @@ class PaymentPlanManager
             'AdvancedDiplomaSixInstalmentsV1315November' => new TwoYearSixInstalments1315November(),
             'AdvancedDiplomaSixInstalmentsV1315February' => new TwoYearSixInstalments1315February(),
             'AdvancedDiplomaSixInstalmentsV1315January' => new TwoYearSixInstalments1315January(),
+            'TwoYearSixInstalmentsV1315January' => new TwoYearSixInstalments1315January(),
             'TwoYearSixInstalmentsV1315February' => new TwoYearSixInstalments1315February(),
             'TwoYearSixInstalmentsV1315October' => new TwoYearSixInstalments1315November(),
             'TwoYearSixInstalmentsV1315November' => new TwoYearSixInstalments1315November(),
