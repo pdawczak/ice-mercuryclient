@@ -53,7 +53,7 @@ class Transaction
 
     /**
      * @param int $amountReceived
-     * @return TransactionRequest
+     * @return Transaction
      */
     public function setAmountReceived($amountReceived)
     {
@@ -71,7 +71,7 @@ class Transaction
 
     /**
      * @param int $id
-     * @return TransactionRequest
+     * @return Transaction
      */
     public function setId($id)
     {
