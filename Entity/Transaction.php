@@ -46,8 +46,14 @@ class Transaction
     private $transactionRequest;
 
     /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $reference;
+
+    /**
      * @param int $amountReceived
-     * @return TransactionRequest
+     * @return Transaction
      */
     public function setAmountReceived($amountReceived)
     {
@@ -65,7 +71,7 @@ class Transaction
 
     /**
      * @param int $id
-     * @return TransactionRequest
+     * @return Transaction
      */
     public function setId($id)
     {
@@ -151,5 +157,23 @@ class Transaction
     public function getCreated()
     {
         return $this->created;
+    }
+
+    /**
+     * @param string $reference
+     * @return Transaction
+     */
+    public function setReference($reference)
+    {
+        $this->reference = $reference;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReference()
+    {
+        return $this->reference;
     }
 }
