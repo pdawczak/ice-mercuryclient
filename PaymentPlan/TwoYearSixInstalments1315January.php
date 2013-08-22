@@ -68,7 +68,7 @@ class TwoYearSixInstalments1315January extends AbstractPaymentPlan implements Pa
      */
     public function getShortDescription()
     {
-        return 'Six quarterly instalments';
+        return 'Six instalments over two years';
     }
 
     /**
@@ -76,6 +76,6 @@ class TwoYearSixInstalments1315January extends AbstractPaymentPlan implements Pa
      */
     public function getLongDescription()
     {
-        return 'Six quarterly instalments';
+        return 'Six instalments over two years';
     }
 }
