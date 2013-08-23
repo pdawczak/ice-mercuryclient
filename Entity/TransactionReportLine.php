@@ -19,6 +19,12 @@ class TransactionReportLine
     private $cardType;
 
     /**
+     * @var int
+     * @JMS\Type("integer")
+     */
+    private $transactionId;
+
+    /**
      * @var \DateTime
      * @JMS\Type("DateTime")
      */
@@ -269,5 +275,23 @@ class TransactionReportLine
     public function getLineDescription()
     {
         return $this->lineDescription;
+    }
+
+    /**
+     * @param int $transactionId
+     * @return TransactionReportLine
+     */
+    public function setTransactionId($transactionId)
+    {
+        $this->transactionId = $transactionId;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTransactionId()
+    {
+        return $this->transactionId;
     }
 }
