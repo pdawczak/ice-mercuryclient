@@ -176,38 +176,59 @@ class MercuryClient
     }
 
     /**
+     * Build (but don't create) a TransactionRequest for anything outstanding on this order. Useful in isolation
+     * to tell whether anything would be taken by requestOutstandingOnlineTransactionsByOrder without needing to
+     * POST to Mercury
+     *
      * @param Order $order
      * @return TransactionRequest
-     * @throws \Exception|\Guzzle\Http\Exception\BadResponseException
      */
-    public function requestOutstandingOnlineTransactionsByOrder(Order $order)
+    public function buildOutstandingOnlineFirstPaymentsRequestByOrder(Order $order)
     {
         $request = new TransactionRequest();
         $components = array();
         foreach ($order->getSuborders() as $suborder) {
-            foreach ($suborder->getPaymentGroup()->getReceivables() as $receivable) {
-                if (
-                    Receivable::METHOD_ONLINE === $receivable->getMethod() &&
-                    $receivable->getDueDate() < new \DateTime()
-                ) {
-                    $component = new TransactionRequestComponent();
-                    $component->setRequestAmount($receivable->getAmountUnallocated());
-                    $component->setPaymentGroup($suborder->getPaymentGroup());
-                    $components[] = $component;
-                }
+            $component = new TransactionRequestComponent();
+            $component->setRequestAmount($suborder->getPaymentGroup()->getOutstandingOnlineFirstPaymentAmount());
+            $component->setPaymentGroup($suborder->getPaymentGroup());
+            if ($component->getRequestAmount() > 0) {
+                $components[] = $component;
             }
         }
         $request->setComponents($components);
         $request->setIceId($order->getIceId());
         $request->setRequestAccountTypeDescription($this->getGatewayMethod());
+        return $request;
+    }
+
+    /**
+     * @param Order $order
+     * @deprecated Use requestOutstandingOnlineFirstPaymentsByOrder
+     * @return TransactionRequest
+     * @throws \Exception|\Guzzle\Http\Exception\BadResponseException
+     */
+    public function requestOutstandingOnlineTransactionsByOrder(Order $order)
+    {
+        return $this->requestOutstandingOnlineFirstPaymentsByOrder($order);
+    }
+
+    /**
+     * @param Order $order
+     * @return TransactionRequest
+     * @throws \Exception|\Guzzle\Http\Exception\BadResponseException
+     */
+    public function requestOutstandingOnlineFirstPaymentsByOrder(Order $order)
+    {
+        $request = $this->buildOutstandingOnlineFirstPaymentsRequestByOrder($order);
 
         if ($request->getTotalRequestAmount() === 0) {
             return $request;
         }
-
         try {
             /** @var $command OperationCommand */
-            $command = $this->getRestClient()->getCommand('CreateTransactionRequest', array('request' => $request));
+            $command = $this->getRestClient()->getCommand('CreateTransactionRequest', array(
+                'request' => $request
+            ));
             return $command->execute();
         } catch (BadResponseException $e) {
             //TODO: Translate into a usable error

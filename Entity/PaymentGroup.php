@@ -171,4 +171,23 @@ class PaymentGroup
     {
         return $this->externalId;
     }
+
+    /**
+     * Get the amount due to pay online
+     *
+     * @return int
+     */
+    public function getOutstandingOnlineFirstPaymentAmount()
+    {
+        $amount = 0;
+        foreach($this->receivables as $receivable) {
+            if (
+                Receivable::METHOD_ONLINE === $receivable->getMethod() &&
+                $receivable->getDueDate() === null
+            ) {
+                $amount += $receivable->getAmountUnallocated();
+            }
+        }
+        return $amount;
+    }
 }
