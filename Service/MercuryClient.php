@@ -90,6 +90,15 @@ class MercuryClient
 
     /**
      * @param int $id
+     * @return \Ice\MercuryClientBundle\Entity\Transaction
+     */
+    public function getTransactionById($id)
+    {
+        return $this->getRestClient()->getCommand('GetTransaction', array('id' => $id))->execute();
+    }
+
+    /**
+     * @param int $id
      * @return \Ice\MercuryClientBundle\Entity\TransactionRequest
      */
     public function getTransactionRequestById($id)

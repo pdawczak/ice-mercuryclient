@@ -34,6 +34,17 @@
                 }
             }
         },
+        "GetTransaction": {
+            "httpMethod": "GET",
+            "uri" : "transaction/{id}",
+            "responseClass": "Ice\\MercuryClientBundle\\Entity\\Transaction",
+            "parameters": {
+                "id":{
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
         "GetTransactionRequest": {
             "httpMethod": "GET",
             "uri" : "transactionrequest/{id}",
