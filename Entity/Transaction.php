@@ -2,6 +2,7 @@
 
 namespace Ice\MercuryClientBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation as JMS;
 
 /**
@@ -50,6 +51,20 @@ class Transaction
      * @JMS\Type("string")
      */
     private $reference;
+
+    /**
+     * @var TransactionAllocation[]|ArrayCollection
+     * @JMS\Type("ArrayCollection<Ice\MercuryClientBundle\Entity\TransactionAllocation>")
+     */
+    private $allocations;
+
+    /**
+     * Initialise ArrayCollections
+     */
+    public function __construct()
+    {
+        $this->allocations = new ArrayCollection();
+    }
 
     /**
      * @param int $amountReceived
@@ -175,5 +190,23 @@ class Transaction
     public function getReference()
     {
         return $this->reference;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection|\Ice\MercuryClientBundle\Entity\TransactionAllocation[] $allocations
+     * @return Transaction
+     */
+    public function setAllocations($allocations)
+    {
+        $this->allocations = $allocations;
+        return $this;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection|\Ice\MercuryClientBundle\Entity\TransactionAllocation[]
+     */
+    public function getAllocations()
+    {
+        return $this->allocations;
     }
 }
