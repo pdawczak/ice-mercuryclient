@@ -191,7 +191,7 @@ class MercuryClient
                     $receivable->getDueDate() < new \DateTime()
                 ) {
                     $component = new TransactionRequestComponent();
-                    $component->setRequestAmount($receivable->getAmount());
+                    $component->setRequestAmount($receivable->getAmountUnallocated());
                     $component->setPaymentGroup($suborder->getPaymentGroup());
                     $components[] = $component;
                 }
