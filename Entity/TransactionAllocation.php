@@ -26,6 +26,12 @@ class TransactionAllocation{
     private $transaction;
 
     /**
+     * @var Receivable
+     * @JMS\Type("Ice\MercuryClientBundle\Entity\Receivable")
+     */
+    private $receivable;
+
+    /**
      * @return int
      */
     public function getAmount()
@@ -47,5 +53,23 @@ class TransactionAllocation{
     public function getTransaction()
     {
         return $this->transaction;
+    }
+
+    /**
+     * @param \Ice\MercuryClientBundle\Entity\Receivable $receivable
+     * @return TransactionAllocation
+     */
+    public function setReceivable($receivable)
+    {
+        $this->receivable = $receivable;
+        return $this;
+    }
+
+    /**
+     * @return \Ice\MercuryClientBundle\Entity\Receivable
+     */
+    public function getReceivable()
+    {
+        return $this->receivable;
     }
 }

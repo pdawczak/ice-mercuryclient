@@ -50,6 +50,12 @@ class Receivable
     private $allocations;
 
     /**
+     * @var PaymentGroup
+     * @JMS\Type("Ice\MercuryClientBundle\Entity\PaymentGroup")
+     */
+    private $paymentGroup;
+
+    /**
      * Initialise ArrayCollections
      */
     public function __construct()
@@ -165,5 +171,23 @@ class Receivable
     public function isBalanced()
     {
         return $this->getAmountAllocated() == $this->getAmount();
+    }
+
+    /**
+     * @param \Ice\MercuryClientBundle\Entity\PaymentGroup $paymentGroup
+     * @return Receivable
+     */
+    public function setPaymentGroup($paymentGroup)
+    {
+        $this->paymentGroup = $paymentGroup;
+        return $this;
+    }
+
+    /**
+     * @return \Ice\MercuryClientBundle\Entity\PaymentGroup
+     */
+    public function getPaymentGroup()
+    {
+        return $this->paymentGroup;
     }
 }
