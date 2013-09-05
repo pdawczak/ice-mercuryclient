@@ -1,6 +1,7 @@
 <?php
 namespace Ice\MercuryClientBundle\Builder;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Ice\JanusClientBundle\Entity\User;
 use Ice\MercuryClientBundle\Entity\AllocationTarget;
 use Ice\MercuryClientBundle\Entity\CustomerInterface;
@@ -245,6 +246,190 @@ class OrderBuilder
         }
         $this->order->addSuborder($suborder);
         return $this;
+    }
+
+    /**
+     * @param Booking $booking
+     * @param PaymentGroup $paymentGroup
+     * @param Course $course
+     * @param User $delegate
+     * @return $this
+     * @throws \LogicException
+     * @throws \RuntimeException
+     * @throws \Ice\MercuryClientBundle\Exception\CapacityException
+     */
+    public function addExistingBooking($booking, PaymentGroup $paymentGroup, Course $course = null, User $delegate = null)
+    {
+        $suborder = new Suborder();
+
+        if (!$course && !$this->getVeritasClient()) {
+            throw new \LogicException("Course must be given or veritas client must be set before a booking can be added");
+        }
+        if (!$course) {
+            $course = $this->getVeritasClient()->getCourse($booking->getAcademicInformation()->getCourseId());
+        }
+
+        if (!$delegate && $this->getJanusClient()) {
+            try {
+                $delegate = $this->getJanusClient()->getUser($booking->getAcademicInformation()->getIceId());
+            } catch (\Exception $e) {
+                //No big deal - Mercury will be missing some delegate attributes.
+                $delegate = null;
+            }
+        }
+
+        $suborder
+            ->setExternalId($booking->getReference())
+            ->setPaymentGroup($paymentGroup)
+        ;
+
+        if (null === $booking->getCancelledDate()) {
+            $suborder->setDescription('Amendment to '.$booking->getReference());
+
+            foreach ($booking->getBookingItems() as $item) {
+
+                //Don't tell Mercury about booking items that have no value
+                if ($item->getPrice() === 0) {
+                    continue;
+                }
+
+                /** @var BookingItem $matchingCourseItem */
+                $matchingCourseItem = $course->getBookingItems()->filter(function (BookingItem $courseItem) use ($item) {
+                    return $courseItem->getCode() === $item->getCode();
+                })->first();
+
+                if (!$matchingCourseItem) {
+                    throw new \RuntimeException(sprintf("There is no valid course booking item that has the code \"%s\". The booking will need to be manually modified in the database before it can be paid for.", $item->getCode()));
+                }
+
+                $financeCode = $matchingCourseItem->getFinanceCode();
+
+                $allocationTargets = [];
+
+                if ($item->getCategory()->isDiscount()) {
+                    foreach($booking->getBookingItems() as $innerItem) {
+                        if ($innerItem->getCategory()->isTuition()) {
+
+                            /** @var BookingItem $innerMatchingCourseItem */
+                            $innerMatchingCourseItem = $course->getBookingItems()->filter(function (BookingItem $courseItem) use ($innerItem) {
+                                return $courseItem->getCode() === $innerItem->getCode();
+                            })->first();
+
+                            $allocationTargets[] = (new AllocationTarget())
+                                ->setFinanceCode($innerMatchingCourseItem->getFinanceCode())
+                                ->setStrategy(AllocationTarget::STRATEGY_NEXT_PAYMENT)
+                                ->setWeight(1)
+                            ;
+
+                            break;
+                        }
+                    }
+                }
+
+                $suborder->addLineItem(
+                    (new LineItem())
+                        ->setDescription($item->getDescription())
+                        ->setAmount($item->getPrice())
+                        ->setExternalId($item->getCode())
+                        ->setCostCentre($financeCode) // Finance code is what is needed. Cost centre will be renamed to finance code in Mercury.
+                        ->setAllocationTargets($allocationTargets)
+                );
+            }
+        } else {
+            $suborder->setDescription('Cancellation of '.$booking->getReference());
+        }
+        $this->subtractExistingPaymentGroupFromSuborder($suborder, $paymentGroup);
+
+        if ($suborder->getLineItems()->count() > 0) {
+            $this->order->addSuborder($suborder);
+        }
+        return $this;
+    }
+
+    /**
+     * @param \Ice\MercuryClientBundle\Entity\Suborder $subject
+     * @param PaymentGroup $paymentGroup
+     * @param float $refundRatio
+     */
+    private function subtractExistingPaymentGroupFromSuborder(Suborder $subject, PaymentGroup $paymentGroup, $refundRatio = 1.0)
+    {
+        $orderedItems = $this->computeOrderedLineItems($paymentGroup, $subject->getExternalId());
+
+        foreach ($orderedItems as $lineItem) {
+            if (($existingLineItem = $this->findMatchingLineItemOrNull($lineItem, $subject))) {
+                //This item was already on a previous order.
+                $subject->getLineItems()->removeElement($existingLineItem);
+            }
+            else { //This was ordered before but isn't in the current suborder. Cancel it.
+                $newLineItem = new LineItem();
+                $newLineItem->setExternalId($lineItem->getExternalId())
+                    ->setCostCentre($lineItem->getCostCentre())
+                    ->setAmount($lineItem->getAmount() * -$refundRatio)
+                    ->setDescription('Cancellation of '.$lineItem->getDescription())
+                ;
+                $subject->getLineItems()->add($newLineItem);
+            }
+        }
+    }
+
+    /**
+     * @param PaymentGroup $paymentGroup
+     * @param string $bookingReference
+     * @return \Doctrine\Common\Collections\ArrayCollection | LineItem[]
+     */
+    private function computeOrderedLineItems(PaymentGroup $paymentGroup, $bookingReference)
+    {
+        /** @var Suborder[] $suborders */
+        $suborders = [];
+
+        //Filter suborders and put them in date order
+        foreach ($paymentGroup->getSuborders() as $suborder) {
+            if($suborder->getExternalId() === $bookingReference) {
+                $suborders[$suborder->getOrder()->getCreated()->format('Y-m-d H:i:s')] = $suborder;
+            }
+        }
+        ksort($suborders);
+
+        //Get the line items ordered
+        $lineItems = [];
+
+        foreach ($suborders as $suborder) {
+            foreach ($suborder->getLineItems() as $lineItem) {
+                if (isset($lineItems[$lineItem->getExternalId()])) {
+                    //We've already considered this line item. The new one must be a cancellation
+                    if (strpos($lineItem->getDescription(), 'Cancellation of') !== false) {
+                        unset($lineItems[$lineItem->getExternalId()]);
+                    } else {
+                        throw new \Exception("Bad order history");
+                    }
+                }
+                else {
+                    //Haven't seen this line item yet - hopefully it isn't a cancellation.
+                    if (strpos($lineItem->getDescription(), 'Cancellation of') === false) {
+                        $lineItems[$lineItem->getExternalId()] = $lineItem;
+                    } else {
+                        throw new \Exception("Bad order history.");
+                    }
+                }
+            }
+        }
+
+        return new ArrayCollection($lineItems);
+    }
+
+    /**
+     * @param LineItem $subject
+     * @param Suborder $suborder
+     * @return LineItem|null
+     */
+    private function findMatchingLineItemOrNull(LineItem $subject, Suborder $suborder)
+    {
+        foreach ($suborder->getLineItems() as $lineItem) {
+            if ($lineItem->getExternalId() === $subject->getExternalId()) {
+                return $lineItem;
+            }
+        }
+        return null;
     }
 
     /**
