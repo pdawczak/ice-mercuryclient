@@ -196,10 +196,17 @@ class MercuryClient
     {
         $request = new TransactionRequest();
         $components = array();
+        $paymentGroupIdsProcessed = [];
         foreach ($order->getSuborders() as $suborder) {
+            $paymentGroup = $suborder->getPaymentGroup();
+            if (in_array($paymentGroup->getId(), $paymentGroupIdsProcessed)){
+                continue;
+            }
+            $paymentGroupIdsProcessed[] = $paymentGroup->getId();
+
             $component = new TransactionRequestComponent();
-            $component->setRequestAmount($suborder->getPaymentGroup()->getOutstandingOnlineFirstPaymentAmount());
-            $component->setPaymentGroup($suborder->getPaymentGroup());
+            $component->setRequestAmount($paymentGroup->getOutstandingOnlineFirstPaymentAmount());
+            $component->setPaymentGroup($paymentGroup);
             if ($component->getRequestAmount() > 0) {
                 $components[] = $component;
             }
