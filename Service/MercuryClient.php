@@ -15,6 +15,7 @@ use Ice\MercuryClientBundle\Entity\Transaction;
 use Ice\MercuryClientBundle\Entity\TransactionRequest;
 use Ice\MercuryClientBundle\Entity\TransactionRequestComponent;
 use Ice\MercuryClientBundle\Entity\TransactionReportLine;
+use Ice\MercuryClientBundle\Entity\RcpReportLine;
 use Ice\MercuryClientBundle\Entity\PaymentGroup;
 
 class MercuryClient
@@ -281,6 +282,19 @@ class MercuryClient
             'year' => $day->format('Y'),
             'month' => $day->format('m'),
             'day' => $day->format('d')
+        ])->execute();
+    }
+
+    /**
+     * @param \DateTime $from
+     * @param \DateTime $to
+     * @return ArrayCollection|RcpReportLine[]
+     */
+    public function getRcpReportByDateRange(\DateTime $from, \DateTime $to)
+    {
+        return $this->getRestClient()->getCommand('GetRcpReportByDateRange', [
+            'from' => $from->format('Y-m-d H:i:s'),
+            'to' => $to->format('Y-m-d H:i:s')
         ])->execute();
     }
 

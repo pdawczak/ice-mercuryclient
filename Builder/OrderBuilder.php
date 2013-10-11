@@ -8,9 +8,11 @@ use Ice\MercuryClientBundle\Entity\CustomerInterface;
 use Ice\MercuryClientBundle\Entity\LineItem;
 use Ice\MercuryClientBundle\Entity\Order;
 use Ice\MercuryClientBundle\Entity\PaymentPlanInterface;
+use Ice\MercuryClientBundle\Entity\Receivable;
 use Ice\MercuryClientBundle\Entity\Suborder;
 use Ice\MercuryClientBundle\Entity\PaymentGroup;
 use Ice\MercuryClientBundle\Exception\CapacityException;
+use Ice\MercuryClientBundle\Builder\ProposedSuborder;
 use Ice\MinervaClientBundle\Entity\Booking;
 use Ice\VeritasClientBundle\Entity\BookingItem;
 use Ice\VeritasClientBundle\Entity\Course;
@@ -250,17 +252,60 @@ class OrderBuilder
 
     /**
      * @param Booking $booking
-     * @param PaymentGroup $paymentGroup
+     * @param PaymentGroup|null $paymentGroup
      * @param Course $course
      * @param User $delegate
+     * @param PaymentPlanInterface|null $paymentPlan
      * @return $this
+     */
+    public function addBooking($booking, $paymentGroup, Course $course, User $delegate, $paymentPlan)
+    {
+        $suborder = $this->buildSuborder($booking, $paymentGroup, $course, $delegate);
+
+        if ($suborder->getLineItems()->count() > 0) {
+
+            if ($paymentGroup) {
+                $newPaymentGroup = new PaymentGroup();
+                $newPaymentGroup->setId($paymentGroup->getId());
+                $suborder->setPaymentGroup($newPaymentGroup);
+            }
+            $suborder->setNewReceivables([(new Receivable())
+                ->setMethod('ONLINE')
+                ->setAmount($suborder->getTotalAmount())]);
+
+            //If this booking is new
+            if (!$paymentGroup && $paymentPlan) {
+                $receivables = $paymentPlan->getReceivables(
+                    $course->getStartDate(),
+                    $booking->getBookingTotalPriceInPence()
+                );
+
+                $suborder->setNewReceivables($receivables);
+
+                if ($receivables) {
+                    $paymentGroup->setAttributeByNameAndValue('agreed_payment_method', $receivables[0]->getMethod());
+                }
+            }
+
+            $this->order->addSuborder($suborder);
+        }
+        return $this;
+    }
+
+    /**
+     * @param $booking
+     * @param PaymentGroup | null $paymentGroup
+     * @param Course $course
+     * @param User $delegate
+     * @return ProposedSuborderInterface
      * @throws \LogicException
      * @throws \RuntimeException
-     * @throws \Ice\MercuryClientBundle\Exception\CapacityException
      */
-    public function addExistingBooking($booking, PaymentGroup $paymentGroup, Course $course = null, User $delegate = null)
+    public function buildProposedSuborder($booking, $paymentGroup, Course $course = null, User $delegate = null)
     {
-        $suborder = new Suborder();
+        /** @var Booking $booking */
+
+        $suborder = new ProposedSuborder();
 
         if (!$course && !$this->getVeritasClient()) {
             throw new \LogicException("Course must be given or veritas client must be set before a booking can be added");
@@ -280,6 +325,7 @@ class OrderBuilder
 
         $suborder
             ->setExternalId($booking->getReference())
+            ->setBooking($booking)
             ->setPaymentGroup($paymentGroup)
         ;
 
@@ -327,47 +373,46 @@ class OrderBuilder
                 }
 
                 $suborder->addLineItem(
-                    (new LineItem())
-                        ->setDescription($item->getDescription())
-                        ->setAmount($item->getPrice())
-                        ->setExternalId($item->getCode())
-                        ->setCostCentre($financeCode) // Finance code is what is needed. Cost centre will be renamed to finance code in Mercury.
+                    (new ProposedLineItem())
+                        ->setBookingItemDescription($item->getDescription())
+                        ->setLineItemDescription($item->getDescription())
+                        ->setItemValue($item->getPrice())
+                        ->setLineAmount($item->getPrice())
+                        ->setBookingItemCode($item->getCode())
+                        ->setFinanceCode($financeCode)
                         ->setAllocationTargets($allocationTargets)
                 );
             }
-        } else {
-            $suborder->setDescription('Cancellation of '.$booking->getReference());
         }
-        $this->subtractExistingPaymentGroupFromSuborder($suborder, $paymentGroup);
 
-        if ($suborder->getLineItems()->count() > 0) {
-            $this->order->addSuborder($suborder);
+        if($paymentGroup) {
+            $this->subtractExistingPaymentGroupFromProposedSuborder($suborder, $paymentGroup);
         }
-        return $this;
+
+        return $suborder;
     }
 
     /**
-     * @param \Ice\MercuryClientBundle\Entity\Suborder $subject
+     * @param \Ice\MercuryClientBundle\Builder\ProposedSuborder $subject
      * @param PaymentGroup $paymentGroup
-     * @param float $refundRatio
      */
-    private function subtractExistingPaymentGroupFromSuborder(Suborder $subject, PaymentGroup $paymentGroup, $refundRatio = 1.0)
+    private function subtractExistingPaymentGroupFromProposedSuborder(ProposedSuborder $subject, PaymentGroup $paymentGroup)
     {
         $orderedItems = $this->computeOrderedLineItems($paymentGroup, $subject->getExternalId());
 
         foreach ($orderedItems as $lineItem) {
-            if (($existingLineItem = $this->findMatchingLineItemOrNull($lineItem, $subject))) {
+            if (($existingLineItem = $this->findMatchingProposedLineItemOrNull($lineItem, $subject))) {
                 //This item was already on a previous order.
-                $subject->getLineItems()->removeElement($existingLineItem);
+                $subject->removeLineItem($existingLineItem);
             }
             else { //This was ordered before but isn't in the current suborder. Cancel it.
-                $newLineItem = new LineItem();
-                $newLineItem->setExternalId($lineItem->getExternalId())
-                    ->setCostCentre($lineItem->getCostCentre())
-                    ->setAmount($lineItem->getAmount() * -$refundRatio)
-                    ->setDescription('Cancellation of '.$lineItem->getDescription())
+                $newLineItem = new ProposedLineItem();
+                $newLineItem->setBookingItemCode($lineItem->getExternalId())
+                    ->setFinanceCode($lineItem->getCostCentre())
+                    ->setItemValue(-$lineItem->getAmount())
+                    ->setBookingItemDescription($lineItem->getDescription())
                 ;
-                $subject->getLineItems()->add($newLineItem);
+                $subject->addLineItem($newLineItem);
             }
         }
     }
@@ -418,14 +463,14 @@ class OrderBuilder
     }
 
     /**
-     * @param LineItem $subject
-     * @param Suborder $suborder
-     * @return LineItem|null
+     * @param \Ice\MercuryClientBundle\Entity\LineItem $subject
+     * @param \Ice\MercuryClientBundle\Builder\ProposedSuborderInterface $suborder
+     * @return ProposedLineItem|null
      */
-    private function findMatchingLineItemOrNull(LineItem $subject, Suborder $suborder)
+    private function findMatchingProposedLineItemOrNull(LineItem $subject, ProposedSuborderInterface $suborder)
     {
         foreach ($suborder->getLineItems() as $lineItem) {
-            if ($lineItem->getExternalId() === $subject->getExternalId()) {
+            if ($lineItem->getBookingItemCode() === $subject->getExternalId()) {
                 return $lineItem;
             }
         }
