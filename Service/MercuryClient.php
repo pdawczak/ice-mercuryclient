@@ -218,6 +218,26 @@ class MercuryClient
         return $request;
     }
 
+    public function createSuspendedTransactionRequestForCustomer($iceId)
+    {
+        $request = new TransactionRequest();
+        $request->setExcludeFromCufs(1)
+            ->setRequestAccountTypeDescription($this->getGatewayMethod())
+            ->setIceId($iceId)
+        ;
+
+        try {
+            /** @var $command OperationCommand */
+            $command = $this->getRestClient()->getCommand('CreateTransactionRequest', array(
+                'request' => $request
+            ));
+            return $command->execute();
+        } catch (BadResponseException $e) {
+            //TODO: Translate into a usable error
+            throw $e;
+        }
+    }
+
     /**
      * @param Order $order
      * @deprecated Use requestOutstandingOnlineFirstPaymentsByOrder
