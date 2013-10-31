@@ -15,6 +15,7 @@ use Ice\MercuryClientBundle\Entity\Transaction;
 use Ice\MercuryClientBundle\Entity\TransactionRequest;
 use Ice\MercuryClientBundle\Entity\TransactionRequestComponent;
 use Ice\MercuryClientBundle\Entity\TransactionReportLine;
+use Ice\MercuryClientBundle\Entity\RcpReportLine;
 use Ice\MercuryClientBundle\Entity\PaymentGroup;
 
 class MercuryClient
@@ -217,6 +218,26 @@ class MercuryClient
         return $request;
     }
 
+    public function createSuspendedTransactionRequestForCustomer($iceId)
+    {
+        $request = new TransactionRequest();
+        $request->setExcludeFromCufs(1)
+            ->setRequestAccountTypeDescription($this->getGatewayMethod())
+            ->setIceId($iceId)
+        ;
+
+        try {
+            /** @var $command OperationCommand */
+            $command = $this->getRestClient()->getCommand('CreateTransactionRequest', array(
+                'request' => $request
+            ));
+            return $command->execute();
+        } catch (BadResponseException $e) {
+            //TODO: Translate into a usable error
+            throw $e;
+        }
+    }
+
     /**
      * @param Order $order
      * @deprecated Use requestOutstandingOnlineFirstPaymentsByOrder
@@ -281,6 +302,19 @@ class MercuryClient
             'year' => $day->format('Y'),
             'month' => $day->format('m'),
             'day' => $day->format('d')
+        ])->execute();
+    }
+
+    /**
+     * @param \DateTime $from
+     * @param \DateTime $to
+     * @return ArrayCollection|RcpReportLine[]
+     */
+    public function getRcpReportByDateRange(\DateTime $from, \DateTime $to)
+    {
+        return $this->getRestClient()->getCommand('GetRcpReportByDateRange', [
+            'from' => $from->format('Y-m-d H:i:s'),
+            'to' => $to->format('Y-m-d H:i:s')
         ])->execute();
     }
 

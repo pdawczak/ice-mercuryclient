@@ -86,6 +86,21 @@
                 }
             }
         },
+        "GetRcpReportByDateRange": {
+            "httpMethod": "GET",
+            "uri" : "reports/rcp",
+            "responseClass": "ArrayCollection<Ice\\MercuryClientBundle\\Entity\\RcpReportLine>",
+            "parameters": {
+                "from":{
+                    "location": "query",
+                    "required": true
+                },
+                "to":{
+                    "location": "query",
+                    "required": true
+                }
+            }
+        },
         "GetPaymentGroup": {
             "httpMethod": "GET",
             "uri" : "paymentgroup/{id}",

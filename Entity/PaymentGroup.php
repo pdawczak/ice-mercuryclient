@@ -38,6 +38,12 @@ class PaymentGroup
     private $externalId;
 
     /**
+     * @var Authorisation
+     * @JMS\Type("Ice\MercuryClientBundle\Entity\Authorisation")
+     */
+    private $preferredAuthorisation;
+
+    /**
      * Initialise ArrayCollections
      */
     public function __construct()
@@ -189,5 +195,23 @@ class PaymentGroup
             }
         }
         return $amount;
+    }
+
+    /**
+     * @param \Ice\MercuryClientBundle\Entity\Authorisation $preferredAuthorisation
+     * @return PaymentGroup
+     */
+    public function setPreferredAuthorisation($preferredAuthorisation)
+    {
+        $this->preferredAuthorisation = $preferredAuthorisation;
+        return $this;
+    }
+
+    /**
+     * @return \Ice\MercuryClientBundle\Entity\Authorisation
+     */
+    public function getPreferredAuthorisation()
+    {
+        return $this->preferredAuthorisation;
     }
 }

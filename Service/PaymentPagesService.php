@@ -88,11 +88,11 @@ class PaymentPagesService
      *
      * @param TransactionRequest $transactionRequest
      * @param \Ice\MercuryClientBundle\Entity\CustomerInterface $customer
+     * @param bool $suspended
      * @return string
      */
-    public function getIframeUrl(TransactionRequest $transactionRequest, $customer = null)
+    public function getIframeUrl(TransactionRequest $transactionRequest, $customer = null, $suspended = false)
     {
-
         if ($customer instanceof CustomerInterface) {
             $extraParams = [
                     'billingprefixname'=>$customer->getTitle(),
@@ -124,6 +124,11 @@ class PaymentPagesService
             'accounttypedescription'=>$transactionRequest->getRequestAccountTypeDescription(),
             'orderreference'=>$transactionRequest->getReference()
         );
+
+        if ($suspended) {
+            $params['settlestatus'] = 2;
+            $params['mainamount'] = 1;
+        }
 
         $hashData = $params['accounttypedescription'].
             $params['currencyiso3a'].

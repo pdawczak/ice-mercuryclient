@@ -41,6 +41,14 @@
         </service>
 
         <service
+                id="mercury.payment_strategy_manager"
+                class="Ice\MercuryClientBundle\Builder\PaymentStrategyManager"
+                public="true"
+                >
+        </service>
+
+
+        <service
                 id="mercury.lookup"
                 class="Ice\MercuryClientBundle\Util\Lookup"
                 public="true"
