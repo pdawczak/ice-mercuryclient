@@ -28,6 +28,11 @@ class TransactionRequestComponent
     private $paymentGroup;
 
     /**
+     * @var string
+     */
+    private $paymentGroupExternalId;
+
+    /**
      * @var int
      *
      * @JMS\Type("integer")
@@ -109,5 +114,23 @@ class TransactionRequestComponent
      */
     public function isRefund(){
         return $this->getRequestAmount() < 0;
+    }
+
+    /**
+     * @param string $paymentGroupExternalId
+     * @return TransactionRequestComponent
+     */
+    public function setPaymentGroupExternalId($paymentGroupExternalId)
+    {
+        $this->paymentGroupExternalId = $paymentGroupExternalId;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentGroupExternalId()
+    {
+        return $this->paymentGroupExternalId;
     }
 }

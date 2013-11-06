@@ -218,13 +218,26 @@ class MercuryClient
         return $request;
     }
 
-    public function createSuspendedTransactionRequestForCustomer($iceId)
+    public function createSuspendedTransactionRequestForCustomer($iceId, array $paymentGroupExternalIds = [])
     {
         $request = new TransactionRequest();
         $request->setExcludeFromCufs(1)
             ->setRequestAccountTypeDescription($this->getGatewayMethod())
             ->setIceId($iceId)
         ;
+
+        $components = [];
+        foreach ($paymentGroupExternalIds as $paymentGroupExternalId) {
+            $component = new TransactionRequestComponent();
+            $component
+                ->setPaymentGroupExternalId($paymentGroupExternalId)
+                ->setRequestAmount(0)
+                ->setRequest($request)
+            ;
+            $components[] = $component;
+        }
+
+        $request->setComponents($components);
 
         try {
             /** @var $command OperationCommand */
