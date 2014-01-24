@@ -21,7 +21,7 @@ class MarchAprilMay2014 extends AbstractPaymentPlan implements PaymentPlanInterf
         $instalment2 = new Receivable();
         $instalment2
             ->setAmount($total * 0.25)
-            ->setDueDate(new \DateTime('2013-03-01'));
+            ->setDueDate(new \DateTime('2014-03-01'));
 
         $instalment3 = new Receivable();
         $instalment3
