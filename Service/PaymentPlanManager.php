@@ -11,6 +11,9 @@ use Ice\MercuryClientBundle\Entity\PaymentPlanInterface;
 use Ice\MercuryClientBundle\PaymentPlan\ResidentialRegistrationFee;
 use Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1315November;
 use Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1315January;
+use Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1416February;
+use Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1416January;
+use Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1416November;
 
 class PaymentPlanManager
 {
