@@ -352,7 +352,7 @@ class OrderBuilder
 
                 $allocationTargets = [];
 
-                if ($item->getCategory()->isDiscount()) {
+                if ($item->getCategory()->isDiscount() && (substr($item->getCode(), 0, 7) === 'BURSARY')) {
                     foreach($booking->getBookingItems() as $innerItem) {
                         if ($innerItem->getCategory()->isTuition()) {
 
