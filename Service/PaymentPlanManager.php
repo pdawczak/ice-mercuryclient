@@ -5,6 +5,7 @@ namespace Ice\MercuryClientBundle\Service;
 use Ice\MercuryClientBundle\Exception\InvalidPaymentPlanException;
 use Ice\MercuryClientBundle\PaymentPlan\AprilMayJune2014;
 use Ice\MercuryClientBundle\PaymentPlan\MarchAprilMay2014;
+use Ice\MercuryClientBundle\PaymentPlan\OneYearThreeInstalments1415;
 use Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1315February;
 use Ice\MercuryClientBundle\PaymentPlan\OneYearThreeInstalments1314;
 use Ice\MercuryClientBundle\PaymentPlan\FullAmountNow;
@@ -47,6 +48,7 @@ class PaymentPlanManager
             'MarchAprilMayV2014' => new MarchAprilMay2014(),
             'AprilMayJuneV2014' => new AprilMayJune2014(),
             'OneYearThreeInstalmentsV1314' => new OneYearThreeInstalments1314(),
+            'OneYearThreeInstalmentsV1415' => new OneYearThreeInstalments1415(),
             'FullAmountNowV1' => new FullAmountNow(),
             'ResidentialRegistrationFeeV1' => new ResidentialRegistrationFee(),
         );
