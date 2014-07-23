@@ -15,6 +15,7 @@ use Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1315November;
 use Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1315January;
 use Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1416February;
 use Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1416January;
+use Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1416Mst;
 use Ice\MercuryClientBundle\PaymentPlan\TwoYearSixInstalments1416November;
 
 class PaymentPlanManager
@@ -40,6 +41,7 @@ class PaymentPlanManager
             'TwoYearSixInstalmentsV1315February' => new TwoYearSixInstalments1315February(),
             'TwoYearSixInstalmentsV1315October' => new TwoYearSixInstalments1315November(),
             'TwoYearSixInstalmentsV1315November' => new TwoYearSixInstalments1315November(),
+            'TwoYearSixInstalmentsV1416Mst' => new TwoYearSixInstalments1416Mst(),
             'TwoYearSixInstalmentsV1416January' => new TwoYearSixInstalments1416January(),
             'TwoYearSixInstalmentsV1416February' => new TwoYearSixInstalments1416February(),
             'TwoYearSixInstalmentsV1416October' => new TwoYearSixInstalments1416November(),
