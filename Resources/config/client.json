@@ -161,6 +161,23 @@
                     "instanceOf": "Ice\\MercuryClientBundle\\Entity\\TransactionRequest"
                 }
             }
+        },
+        "patchPaymentGroup": {
+            "httpMethod": "PATCH",
+            "uri": "paymentgroup/{id}",
+            "responseClass": "Ice\\Api\\Rest\\Patch\\Response\\Response",
+            "parameters": {
+                "id":{
+                    "location": "uri",
+                    "required": true
+                },
+                "request" : {
+                    "location": "body",
+                    "sentAs": "json",
+                    "required": true,
+                    "instanceOf": "json"
+                }
+            }
         }
     }
 }

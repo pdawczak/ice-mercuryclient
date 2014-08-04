@@ -38,5 +38,8 @@
             "Ice\\MercuryClientBundle": ""
         }
     },
+    "suggest": {
+        "ice/patchpatch": "Helps processing Patch REST requests."
+    },
     "target-dir": "Ice/MercuryClientBundle"
 }

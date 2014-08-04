@@ -6,6 +6,7 @@ use Guzzle\Http\Exception\BadResponseException;
 use Guzzle\Service\Client;
 use Doctrine\Common\Collections\ArrayCollection;
 use Guzzle\Service\Command\DefaultRequestSerializer;
+use Ice\Api\Rest\Patch\Patch;
 use Ice\MercuryClientBundle\Builder\OrderBuilder;
 use Ice\MercuryClientBundle\Builder\TransactionBuilder;
 use Ice\MercuryClientBundle\Entity\Order;
@@ -355,5 +356,19 @@ class MercuryClient
         return $this->getRestClient()->getCommand('getPaymentGroupByExternalId', [
             'externalId' =>$externalId
         ])->execute();
+    }
+
+    /**
+     * @param $paymentGroupId
+     * @param Patch $patch
+     * @return mixed
+     */
+    public function patchPaymentGroup($paymentGroupId, Patch $patch)
+    {
+        return $this->getRestClient()
+            ->getCommand('patchPaymentGroup', [
+                'id'      => $paymentGroupId,
+                'request' => $patch->toArray()
+            ])->execute();
     }
 }
