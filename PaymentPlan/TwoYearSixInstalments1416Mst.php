@@ -89,7 +89,7 @@ class TwoYearSixInstalments1416Mst extends AbstractPaymentPlan implements Paymen
      */
     public function getShortDescription()
     {
-        return 'Six instalments over two years';
+        return 'Six instalments over two years (MST)';
     }
 
     /**
@@ -97,6 +97,6 @@ class TwoYearSixInstalments1416Mst extends AbstractPaymentPlan implements Paymen
      */
     public function getLongDescription()
     {
-        return 'Six instalments over two years';
+        return 'Six instalments over two years (MST)';
     }
 }
