@@ -38,6 +38,14 @@ class TwoYearSixInstalments1416Mst extends AbstractPaymentPlan implements Paymen
             ->setDueDate(new \DateTime('2016-04-01')); // 1 April 2016
 
         switch ($total) {
+            case 750000; //10K tuition fee with 2500 bursary, to be taken off the final instalment
+                $instalment1->setAmount(170000);
+                $instalment2->setAmount(170000);
+                $instalment3->setAmount(35000);
+                $instalment4->setAmount(170000);
+                $instalment5->setAmount(170000);
+                $instalment6->setAmount(35000);
+                break;
             case 875000; //10K tuition fee with 1250 bursary, to be taken off the final instalment
                 $instalment1->setAmount(170000);
                 $instalment2->setAmount(170000);
@@ -45,6 +53,14 @@ class TwoYearSixInstalments1416Mst extends AbstractPaymentPlan implements Paymen
                 $instalment4->setAmount(170000);
                 $instalment5->setAmount(170000);
                 $instalment6->setAmount(35000);
+                break;
+            case 1750000; //20K tuition fee with 2500 bursary, to be taken off the final instalment
+                $instalment1->setAmount(340000);
+                $instalment2->setAmount(340000);
+                $instalment3->setAmount(195000);
+                $instalment4->setAmount(340000);
+                $instalment5->setAmount(340000);
+                $instalment6->setAmount(195000);
                 break;
             case 1875000; //20K tuition fee with 1250 bursary, to be taken off the final instalment
                 $instalment1->setAmount(340000);
