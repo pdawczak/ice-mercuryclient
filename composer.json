@@ -35,11 +35,10 @@
     },
     "autoload": {
         "psr-0": {
-            "Ice\\MercuryClientBundle": ""
+            "": "src"
         }
     },
     "suggest": {
         "ice/patchpatch": "Helps processing Patch REST requests."
-    },
-    "target-dir": "Ice/MercuryClientBundle"
+    }
 }
