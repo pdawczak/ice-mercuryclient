@@ -4,6 +4,7 @@ namespace Ice\MercuryClientBundle\Service;
 
 use Guzzle\Http\Exception\BadResponseException;
 use Guzzle\Service\Client;
+use Guzzle\Service\ClientInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Guzzle\Service\Command\DefaultRequestSerializer;
 use Ice\Api\Rest\Patch\Patch;
@@ -22,7 +23,7 @@ use Ice\MercuryClientBundle\Entity\PaymentGroup;
 class MercuryClient
 {
     /**
-     * @var MercuryRestClient
+     * @var ClientInterface
      */
     private $restClient;
 
@@ -55,7 +56,7 @@ class MercuryClient
     }
 
     /**
-     * @param \Ice\MercuryClientBundle\Service\MercuryRestClient $restClient
+     * @param ClientInterface $restClient
      * @return MercuryClient
      */
     public function setRestClient($restClient)
@@ -65,7 +66,7 @@ class MercuryClient
     }
 
     /**
-     * @return \Ice\MercuryClientBundle\Service\MercuryRestClient
+     * @return ClientInterface
      */
     public function getRestClient()
     {
