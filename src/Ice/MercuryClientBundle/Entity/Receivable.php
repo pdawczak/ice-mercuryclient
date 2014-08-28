@@ -18,6 +18,7 @@ class Receivable
     const METHOD_INVOICE = 'INVOICE';
     const METHOD_PDQ = 'PDQ';
     const METHOD_STUDENT_LOAN = 'STUDENT_LOAN';
+    const BAD_DEBT = 'BAD_DEBT';
 
     /**
      * @var int

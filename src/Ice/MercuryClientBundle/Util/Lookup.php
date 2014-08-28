@@ -26,7 +26,8 @@ class Lookup
             Receivable::METHOD_CHEQUE => 'Cheque payment',
             Receivable::METHOD_INVOICE => 'Invoice payment',
             Receivable::METHOD_PDQ => 'PDQ payment',
-            Receivable::METHOD_STUDENT_LOAN => 'Student loan'
+            Receivable::METHOD_STUDENT_LOAN => 'Student loan',
+            Receivable::METHOD_BAD_DEBT => 'Bad debt'
         ];
         
         if (isset($mappings[$method])) {
