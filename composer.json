@@ -15,10 +15,6 @@
     ],
     "repositories": [
         {
-            "type": "composer",
-            "url": "http://satis.internal.admin.cam.ac.uk"
-        },
-        {
             "type": "vcs",
             "url": "https://github.com/rh389/serializer.git"
         }
