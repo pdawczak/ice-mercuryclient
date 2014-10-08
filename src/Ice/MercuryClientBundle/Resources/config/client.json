@@ -1,0 +1,183 @@
+{
+    "name": "ICE Mercury",
+    "operations": {
+        "GetOrder": {
+            "httpMethod": "GET",
+            "uri" : "order/{id}",
+            "responseClass": "Ice\\MercuryClientBundle\\Entity\\Order",
+            "parameters": {
+                "id":{
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "GetOrderByReference": {
+            "httpMethod": "GET",
+            "uri" : "order/by/reference/{reference}",
+            "responseClass": "Ice\\MercuryClientBundle\\Entity\\Order",
+            "parameters": {
+                "reference":{
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "GetOrders": {
+            "httpMethod": "GET",
+            "uri" : "orders",
+            "responseClass": "ArrayCollection<Ice\\MercuryClientBundle\\Entity\\Order>",
+            "parameters": {
+                "customer": {
+                    "location": "query",
+                    "required": false
+                }
+            }
+        },
+        "GetTransaction": {
+            "httpMethod": "GET",
+            "uri" : "transaction/{id}",
+            "responseClass": "Ice\\MercuryClientBundle\\Entity\\Transaction",
+            "parameters": {
+                "id":{
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "GetTransactionRequest": {
+            "httpMethod": "GET",
+            "uri" : "transactionrequest/{id}",
+            "responseClass": "Ice\\MercuryClientBundle\\Entity\\TransactionRequest",
+            "parameters": {
+                "id":{
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "GetTransactionRequestByReference": {
+            "httpMethod": "GET",
+            "uri" : "transactionrequest/by/reference/{reference}",
+            "responseClass": "Ice\\MercuryClientBundle\\Entity\\TransactionRequest",
+            "parameters": {
+                "reference":{
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "GetTransactionReportByDay": {
+            "httpMethod": "GET",
+            "uri" : "reports/transactions/byday/{year}-{month}-{day}",
+            "responseClass": "ArrayCollection<Ice\\MercuryClientBundle\\Entity\\TransactionReportLine>",
+            "parameters": {
+                "year":{
+                    "location": "uri",
+                    "required": true
+                },
+                "month":{
+                    "location": "uri",
+                    "required": true
+                },
+                "day":{
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "GetRcpReportByDateRange": {
+            "httpMethod": "GET",
+            "uri" : "reports/rcp",
+            "responseClass": "ArrayCollection<Ice\\MercuryClientBundle\\Entity\\RcpReportLine>",
+            "parameters": {
+                "from":{
+                    "location": "query",
+                    "required": true
+                },
+                "to":{
+                    "location": "query",
+                    "required": true
+                }
+            }
+        },
+        "GetPaymentGroup": {
+            "httpMethod": "GET",
+            "uri" : "paymentgroup/{id}",
+            "responseClass": "Ice\\MercuryClientBundle\\Entity\\PaymentGroup",
+            "parameters": {
+                "id":{
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "GetPaymentGroupByExternalId": {
+            "httpMethod": "GET",
+            "uri" : "paymentgroup/by/externalid/{externalId}",
+            "responseClass": "Ice\\MercuryClientBundle\\Entity\\PaymentGroup",
+            "parameters": {
+                "externalId":{
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "CreateOrder": {
+            "httpMethod": "POST",
+            "uri": "orders",
+            "responseClass": "Ice\\MercuryClientBundle\\Entity\\Order",
+            "parameters": {
+                "order" : {
+                    "location":"body",
+                    "sentAs":"json",
+                    "required":true,
+                    "instanceOf": "Ice\\MercuryClientBundle\\Entity\\Order"
+                }
+            }
+        },
+        "CreateTransaction": {
+            "httpMethod": "POST",
+            "uri": "transactions",
+            "responseClass": "Ice\\MercuryClientBundle\\Entity\\Transaction",
+            "parameters": {
+                "transaction" : {
+                    "location":"body",
+                    "sentAs":"json",
+                    "required":true,
+                    "instanceOf": "Ice\\MercuryClientBundle\\Entity\\Transaction"
+                }
+            }
+        },
+        "CreateTransactionRequest": {
+            "httpMethod": "POST",
+            "uri": "transactionrequests",
+            "responseClass": "Ice\\MercuryClientBundle\\Entity\\TransactionRequest",
+            "parameters": {
+                "request" : {
+                    "location":"body",
+                    "sentAs":"json",
+                    "required":true,
+                    "instanceOf": "Ice\\MercuryClientBundle\\Entity\\TransactionRequest"
+                }
+            }
+        },
+        "patchPaymentGroup": {
+            "httpMethod": "PATCH",
+            "uri": "paymentgroup/{id}",
+            "responseClass": "Ice\\Api\\Rest\\Patch\\Response\\Response",
+            "parameters": {
+                "id":{
+                    "location": "uri",
+                    "required": true
+                },
+                "request" : {
+                    "location": "body",
+                    "sentAs": "json",
+                    "required": true,
+                    "instanceOf": "json"
+                }
+            }
+        }
+    }
+}

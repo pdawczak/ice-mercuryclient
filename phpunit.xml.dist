@@ -9,11 +9,11 @@
          processIsolation="false"
          stopOnFailure="false"
          syntaxCheck="false"
-         bootstrap="tests/bootstrap.php"
+         bootstrap="src/Ice/MercuryClientBundle/Tests/bootstrap.php"
 >
     <testsuites>
         <testsuite name="ICE Mercury Client Test Suite">
-            <directory>./Tests/</directory>
+            <directory>./src/Ice/MercuryClientBundle/Tests/</directory>
         </testsuite>
     </testsuites>
 </phpunit>
